@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#102D3A">
-<meta name="description" content="Atlas RH — prototype de digitalisation des congés, absences et formations pour Atlas Services SARL.">
-<title>Atlas RH | Espace de gestion des ressources humaines</title>
+<meta name="description" content="Atlas RH — plateforme de digitalisation des congés, absences, formations et de la paie marocaine pour Atlas Services SARL.">
+<title>Atlas RH | Espace de gestion des ressources humaines & Paie Maroc</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
@@ -179,7 +179,7 @@ tr:hover td { background: #F9FCFD; }
 
 /* Modal & Drawer */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(11, 60, 73, 0.55); backdrop-filter: blur(2px); z-index: 100; display: grid; place-items: center; padding: 16px; }
-.modal-box { background: var(--surface); border-radius: var(--radius); width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
+.modal-box { background: var(--surface); border-radius: var(--radius); width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
 .modal-head { padding: 18px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
 .modal-body { padding: 20px; }
 .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; justify-content: flex-end; gap: 10px; background: var(--bg); }
@@ -234,6 +234,12 @@ details.faq-item p { margin-top: 8px; color: var(--muted); }
   .sidebar, .topbar, .mobile-nav, .no-print, .toast-stack { display: none !important; }
   .page-content { padding: 0; max-width: 100%; }
   .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+  body.print-slip #app { display: none !important; }
+  body.print-slip #modal-root { position: static !important; background: none !important; padding: 0 !important; }
+  body.print-slip .modal-backdrop { position: static !important; background: none !important; backdrop-filter: none !important; padding: 0 !important; display: block !important; }
+  body.print-slip .modal-box { box-shadow: none !important; border: none !important; max-width: 100% !important; max-height: none !important; overflow: visible !important; }
+  body.print-slip .modal-head, body.print-slip .modal-foot { display: none !important; }
+  body.print-slip .modal-body { padding: 0 !important; }
 }
 
 
@@ -480,12 +486,10 @@ body{background:radial-gradient(circle at 82% 0%,rgba(9,126,135,.035),transparen
 .section-heading h2 { font-size:18px; }
 .page-sub { max-width:620px; }
 .page-header .page-sub { display:block; }
-/* Convert lengthy helper copy into compact supporting labels */
 .quick-action small { display:none !important; }
 .quick-action { min-height:76px; }
 .emp-hero-copy > p, .hr-hero-main > p { max-width:460px; font-size:13px; line-height:1.55; color:rgba(255,255,255,.78); }
 .emp-hero-actions, .hr-hero-actions { margin-top:20px; }
-/* Leave request: three-step process schema */
 .leave-process-flow { display:flex; align-items:center; gap:clamp(8px,2vw,22px); padding:14px 20px; margin:-4px 0 18px; border:1px solid #E2EAED; border-radius:15px; background:linear-gradient(100deg,#fff,#F8FBFB); box-shadow:0 4px 16px rgba(18,45,58,.025); }
 .leave-process-flow > i { width:16px; height:16px; color:#A9B8BE; flex-shrink:0; }
 .leave-process-step { display:flex; align-items:center; gap:10px; min-width:0; }
@@ -512,7 +516,6 @@ body{background:radial-gradient(circle at 82% 0%,rgba(9,126,135,.035),transparen
 .leave-summary-person b,.leave-summary-person small,.training-trainer b,.training-trainer small { display:block; }
 .leave-summary-person b,.training-trainer b { font-size:11px; }
 .leave-summary-person small,.training-trainer small { font-size:10px;color:#82919A;margin-top:2px; }
-/* HR request detail: workflow schema and compact fact tiles */
 .request-flow { display:flex;align-items:center;gap:5px;padding:15px 10px;margin:14px 0;border:1px solid #E7EDF0;border-radius:13px;background:#FAFCFC; }
 .request-flow-node { display:flex;flex-direction:column;align-items:center;text-align:center;gap:5px;min-width:0;flex:1; }
 .request-flow-node > span { display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#EDF2F4;color:#91A0A7; }
@@ -529,7 +532,6 @@ body{background:radial-gradient(circle at 82% 0%,rgba(9,126,135,.035),transparen
 .request-reason { padding:12px 13px;border-radius:11px;background:#F5F8F9;margin:12px 0 15px; }
 .request-reason p { font-size:12px;line-height:1.55;color:#405761; }
 .request-reason > span { display:inline-block;margin-top:8px;color:#087E8B;font-size:10px;font-weight:700; }
-/* Training catalogue: visual cards instead of stacked explanatory paragraphs */
 .training-visual-card { display:flex;flex-direction:column;gap:12px; }
 .training-card-top { display:flex;justify-content:space-between;align-items:center; }
 .training-symbol { width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:#E9F5F4;color:#087E8B; }
@@ -544,9 +546,20 @@ body{background:radial-gradient(circle at 82% 0%,rgba(9,126,135,.035),transparen
 .training-capacity > div:first-child b { color:#35515D;font-size:11px; }
 .training-capacity > small { display:block;margin-top:6px;font-weight:500;letter-spacing:0; }
 .training-trainer { display:flex;align-items:center;gap:9px;padding-top:10px;border-top:1px solid #EDF1F3; }
-/* Tighten text-heavy pages while retaining legibility */
 .card p { line-height:1.55; }
 .table-toolbar { gap:8px; }
+
+/* Payroll Module Specific Styles */
+.payslip-doc { background:#fff; border:1px solid #D9E4E8; border-radius:12px; padding:24px; color:#1B2A30; font-size:12.5px; }
+.payslip-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2px solid var(--primary-dark); padding-bottom:14px; margin-bottom:16px; gap:16px; }
+.payslip-meta-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; background:#F7FAFB; border:1px solid #E5ECEF; border-radius:10px; padding:12px 14px; margin-bottom:16px; }
+.payslip-table { width:100%; border-collapse:collapse; margin-bottom:16px; }
+.payslip-table th { background:#EDF3F5; color:var(--primary-dark); font-size:10.5px; padding:8px 10px; border:1px solid #DCE5E8; }
+.payslip-table td { padding:7px 10px; border:1px solid #E5ECEF; font-size:12px; }
+.payslip-table tr.sub-total td { background:#F4F8F9; font-weight:700; color:var(--primary-dark); }
+.payslip-net-box { display:flex; justify-content:space-between; align-items:center; background:linear-gradient(112deg,#102E3A,#0B7E87); color:#fff; padding:14px 18px; border-radius:10px; }
+.pay-var-input { width:76px; min-height:32px !important; padding:4px 8px !important; text-align:right; font-size:12px !important; }
+
 @media(max-width:768px) {
  .leave-process-flow { padding:12px 10px;gap:6px; }
  .leave-step-number { width:29px;height:29px;border-radius:9px; }
@@ -558,8 +571,8 @@ body{background:radial-gradient(circle at 82% 0%,rgba(9,126,135,.035),transparen
  .leave-summary-tile { padding:10px; }
  .request-flow { padding:12px 6px; }
  .request-flow-node b { font-size:9px; }
+ .payslip-header, .payslip-meta-grid { grid-template-columns:1fr; flex-direction:column; }
 }
-
 </style>
 </head>
 <body>
@@ -647,20 +660,20 @@ function esc(str) {
 
 function createSeedData() {
   const employees = [
-    { id: 'emp_1', name: 'Youssef Benali', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_2', name: 'Salma El Idrissi', service: 'RH', team: 'Direction RH', site: 'Casablanca', role: 'rh', balance: 18 },
-    { id: 'emp_3', name: 'Amine Tazi', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Rabat', role: 'salarie', balance: 18 },
-    { id: 'emp_4', name: 'Khadija Bennani', service: 'Administration', team: 'Finance & Facturation', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_5', name: 'Mehdi Chraibi', service: 'Informatique', team: 'Support & SI', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_6', name: 'Fatima Zahra Alaoui', service: 'Exploitation', team: 'Équipe Rabat Centre', site: 'Rabat', role: 'salarie', balance: 18 },
-    { id: 'emp_7', name: 'Hamza Fassi', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_8', name: 'Aïcha Berrada', service: 'Administration', team: 'Finance & Facturation', site: 'Rabat', role: 'salarie', balance: 18 },
-    { id: 'emp_9', name: 'Karim Lahlou', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_10', name: 'Sofia Kettani', service: 'Informatique', team: 'Support & SI', site: 'Rabat', role: 'salarie', balance: 18 },
-    { id: 'emp_11', name: 'Rachid El Amrani', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_12', name: 'Nabila Sqalli', service: 'RH', team: 'Direction RH', site: 'Rabat', role: 'rh', balance: 18 },
-    { id: 'emp_13', name: 'Omar Benjelloun', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18 },
-    { id: 'emp_14', name: 'Houda Ziani', service: 'Exploitation', team: 'Équipe Rabat Centre', site: 'Rabat', role: 'salarie', balance: 18 }
+    { id: 'emp_1', matricule: 'ATL-001', cnss: '148920341', name: 'Youssef Benali', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 5200, hireYear: 2021, married: true, children: 2, transportAllowance: 500 },
+    { id: 'emp_2', matricule: 'ATL-002', cnss: '129483920', name: 'Salma El Idrissi', service: 'RH', team: 'Direction RH', site: 'Casablanca', role: 'rh', balance: 18, baseSalary: 12500, hireYear: 2019, married: true, children: 2, transportAllowance: 750 },
+    { id: 'emp_3', matricule: 'ATL-003', cnss: '138472910', name: 'Amine Tazi', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Rabat', role: 'salarie', balance: 18, baseSalary: 7800, hireYear: 2020, married: true, children: 1, transportAllowance: 500 },
+    { id: 'emp_4', matricule: 'ATL-004', cnss: '152938471', name: 'Khadija Bennani', service: 'Administration', team: 'Finance & Facturation', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 6800, hireYear: 2022, married: false, children: 0, transportAllowance: 500 },
+    { id: 'emp_5', matricule: 'ATL-005', cnss: '141029384', name: 'Mehdi Chraibi', service: 'Informatique', team: 'Support & SI', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 9500, hireYear: 2021, married: true, children: 1, transportAllowance: 750 },
+    { id: 'emp_6', matricule: 'ATL-006', cnss: '162938401', name: 'Fatima Zahra Alaoui', service: 'Exploitation', team: 'Équipe Rabat Centre', site: 'Rabat', role: 'salarie', balance: 18, baseSalary: 5400, hireYear: 2023, married: false, children: 0, transportAllowance: 500 },
+    { id: 'emp_7', matricule: 'ATL-007', cnss: '135792468', name: 'Hamza Fassi', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 5800, hireYear: 2020, married: true, children: 3, transportAllowance: 500 },
+    { id: 'emp_8', matricule: 'ATL-008', cnss: '174829103', name: 'Aïcha Berrada', service: 'Administration', team: 'Finance & Facturation', site: 'Rabat', role: 'salarie', balance: 18, baseSalary: 6200, hireYear: 2023, married: false, children: 0, transportAllowance: 500 },
+    { id: 'emp_9', matricule: 'ATL-009', cnss: '125634789', name: 'Karim Lahlou', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 5600, hireYear: 2018, married: true, children: 2, transportAllowance: 500 },
+    { id: 'emp_10', matricule: 'ATL-010', cnss: '168293041', name: 'Sofia Kettani', service: 'Informatique', team: 'Support & SI', site: 'Rabat', role: 'salarie', balance: 18, baseSalary: 8800, hireYear: 2022, married: false, children: 0, transportAllowance: 750 },
+    { id: 'emp_11', matricule: 'ATL-011', cnss: '149283746', name: 'Rachid El Amrani', service: 'Maintenance', team: 'Maintenance Terrain', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 5100, hireYear: 2024, married: true, children: 1, transportAllowance: 500 },
+    { id: 'emp_12', matricule: 'ATL-012', cnss: '131928374', name: 'Nabila Sqalli', service: 'RH', team: 'Direction RH', site: 'Rabat', role: 'rh', balance: 18, baseSalary: 10500, hireYear: 2020, married: true, children: 2, transportAllowance: 750 },
+    { id: 'emp_13', matricule: 'ATL-013', cnss: '158392014', name: 'Omar Benjelloun', service: 'Exploitation', team: 'Équipe Casa Nord', site: 'Casablanca', role: 'salarie', balance: 18, baseSalary: 4900, hireYear: 2024, married: false, children: 0, transportAllowance: 500 },
+    { id: 'emp_14', matricule: 'ATL-014', cnss: '161928345', name: 'Houda Ziani', service: 'Exploitation', team: 'Équipe Rabat Centre', site: 'Rabat', role: 'salarie', balance: 18, baseSalary: 5300, hireYear: 2022, married: true, children: 1, transportAllowance: 500 }
   ];
 
   const leaves = [];
@@ -795,7 +808,7 @@ function createSeedData() {
 
   const notifications = [
     { id: 'nt_1', to: 'emp_1', text: 'Votre demande de congé annuel (3j) a été validée par Salma El Idrissi.', ts: isoDateTime(-48), read: false },
-    { id: 'nt_2', to: 'emp_1', text: 'Nouvelle formation disponible : Excel avancé & tableaux de bord.', ts: isoDateTime(-24), read: true },
+    { id: 'nt_2', to: 'emp_1', text: 'Votre bulletin de paie du mois précédent est disponible en téléchargement.', ts: isoDateTime(-24), read: false },
     { id: 'nt_3', to: 'rh', text: 'Alerte : 2 demandes de congés sont en attente depuis plus de 48h.', ts: isoDateTime(-5), read: false },
     { id: 'nt_4', to: 'rh', text: 'Khadija Bennani a soumis une demande de demi-journée sans solde.', ts: isoDateTime(-6), read: false }
   ];
@@ -854,6 +867,33 @@ function createSeedData() {
     { empId: 'emp_5', team: 'Support & SI' }
   ];
 
+  // Initialisation des variables de paie et d'un mois historique publié (mois précédent)
+  const prevMonthDate = new Date();
+  prevMonthDate.setDate(1);
+  prevMonthDate.setMonth(prevMonthDate.getMonth() - 1);
+  const prevPeriod = `${prevMonthDate.getFullYear()}-${String(prevMonthDate.getMonth() + 1).padStart(2, '0')}`;
+
+  const payrollVars = {
+    [prevPeriod]: {
+      emp_1: { ot25: 4, ot50: 0, bonus: 300, advance: 0 },
+      emp_3: { ot25: 6, ot50: 2, bonus: 400, advance: 500 },
+      emp_7: { ot25: 8, ot50: 0, bonus: 250, advance: 0 }
+    }
+  };
+
+  const payrollRuns = employees.map(emp => {
+    const vars = payrollVars[prevPeriod][emp.id] || { ot25: 0, ot50: 0, bonus: 0, advance: 0 };
+    const calc = calculateMoroccanPayroll(emp, prevPeriod, vars, leaves, absences);
+    return {
+      id: `pay_${prevPeriod}_${emp.id}`,
+      period: prevPeriod,
+      empId: emp.id,
+      status: 'Publié',
+      publishedAt: isoDate(-2),
+      ...calc
+    };
+  });
+
   return {
     employees,
     leaves,
@@ -867,6 +907,8 @@ function createSeedData() {
     events,
     errorsLog,
     ambassadors,
+    payrollVars,
+    payrollRuns,
     settings: {
       role: 'salarie',
       userId: 'emp_1',
@@ -886,6 +928,7 @@ function createSeedData() {
 ============================================================================ */
 let memoryFallback = null;
 let db = loadDb();
+ensurePayrollSchema();
 let uiState = {
   reqFilterStatus: 'ALL',
   reqSearch: '',
@@ -899,6 +942,8 @@ let uiState = {
   empSearch: '',
   empSiteFilter: 'ALL',
   empPage: 1,
+  payPeriod: (() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`; })(),
+  paySearch: '',
   trTab: 'catalog',
   selectedEmpDrawer: null,
   selectedHrLeaveId: null,
@@ -919,6 +964,199 @@ let uiState = {
 };
 let activeCharts = [];
 
+function ensurePayrollSchema() {
+  if (!db) return;
+  let updated = false;
+  const defaults = [
+    { sal: 5200, yr: 2021, mar: true, ch: 2, tr: 500 },
+    { sal: 12500, yr: 2019, mar: true, ch: 2, tr: 750 },
+    { sal: 7800, yr: 2020, mar: true, ch: 1, tr: 500 },
+    { sal: 6800, yr: 2022, mar: false, ch: 0, tr: 500 },
+    { sal: 9500, yr: 2021, mar: true, ch: 1, tr: 750 },
+    { sal: 5400, yr: 2023, mar: false, ch: 0, tr: 500 },
+    { sal: 5800, yr: 2020, mar: true, ch: 3, tr: 500 },
+    { sal: 6200, yr: 2023, mar: false, ch: 0, tr: 500 },
+    { sal: 5600, yr: 2018, mar: true, ch: 2, tr: 500 },
+    { sal: 8800, yr: 2022, mar: false, ch: 0, tr: 750 },
+    { sal: 5100, yr: 2024, mar: true, ch: 1, tr: 500 },
+    { sal: 10500, yr: 2020, mar: true, ch: 2, tr: 750 },
+    { sal: 4900, yr: 2024, mar: false, ch: 0, tr: 500 },
+    { sal: 5300, yr: 2022, mar: true, ch: 1, tr: 500 }
+  ];
+  db.employees.forEach((emp, i) => {
+    const d = defaults[i % defaults.length];
+    if (emp.baseSalary == null) {
+      emp.matricule = emp.matricule || `ATL-${String(i + 1).padStart(3, '0')}`;
+      emp.cnss = emp.cnss || `14${8000000 + i * 135791}`;
+      emp.baseSalary = d.sal;
+      emp.hireYear = d.yr;
+      emp.married = d.mar;
+      emp.children = d.ch;
+      emp.transportAllowance = d.tr;
+      updated = true;
+    }
+  });
+  if (!db.payrollVars) { db.payrollVars = {}; updated = true; }
+  if (!Array.isArray(db.payrollRuns)) { db.payrollRuns = []; updated = true; }
+  if (updated) saveDb();
+}
+
+function formatMAD(amount) {
+  const val = Math.round((Number(amount) || 0) * 100) / 100;
+  return val.toLocaleString('fr-MA', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' MAD';
+}
+
+function formatPeriodLabel(periodStr) {
+  if (!periodStr) return '';
+  const [y, m] = periodStr.split('-');
+  const d = new Date(Number(y), Number(m) - 1, 1);
+  return d.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
+}
+
+function getSeniorityRate(hireYear, refYear) {
+  const years = Math.max(0, (refYear || new Date().getFullYear()) - (hireYear || new Date().getFullYear()));
+  if (years >= 25) return 0.25;
+  if (years >= 20) return 0.20;
+  if (years >= 12) return 0.15;
+  if (years >= 5) return 0.10;
+  if (years >= 2) return 0.05;
+  return 0;
+}
+
+function getUnpaidDaysInPeriod(empId, periodStr, leavesList = db.leaves, absencesList = db.absences) {
+  const [y, m] = periodStr.split('-');
+  const firstDay = `${y}-${m}-01`;
+  const lastDayNum = new Date(Number(y), Number(m), 0).getDate();
+  const lastDay = `${y}-${m}-${String(lastDayNum).padStart(2, '0')}`;
+  let unpaid = 0;
+
+  const overlapWorkingDays = (start, end, half = false) => {
+    const s = start < firstDay ? firstDay : start;
+    const e = end > lastDay ? lastDay : end;
+    if (s > e) return 0;
+    return countWorkingDays(s, e, half && s === start && e === end);
+  };
+
+  leavesList.forEach(l => {
+    if (l.empId === empId && l.type === 'sans solde' && l.status === 'Validée') {
+      unpaid += overlapWorkingDays(l.start, l.end, l.half);
+    }
+  });
+
+  absencesList.forEach(a => {
+    if (a.empId === empId && a.type === 'Absence non justifiée') {
+      unpaid += overlapWorkingDays(a.start, a.end, false);
+    }
+  });
+
+  return unpaid;
+}
+
+/* ============================================================================
+   MOTEUR DE CALCUL DE LA PAIE MAROCAINE (Code du Travail, CNSS, AMO & CGI IR)
+============================================================================ */
+function calculateMoroccanPayroll(emp, periodStr, vars = {}, leavesList = db.leaves, absencesList = db.absences) {
+  const refYear = Number(periodStr.split('-')[0]) || new Date().getFullYear();
+  const baseSalary = Number(emp.baseSalary) || 5000;
+  const seniorityRate = getSeniorityRate(emp.hireYear, refYear);
+  const seniorityBonus = Math.round(baseSalary * seniorityRate * 100) / 100;
+
+  // Taux horaire légal Maroc : 191 heures / mois (44h / semaine)
+  const hourlyRate = baseSalary / 191;
+  const ot25Hours = Math.max(0, Number(vars.ot25) || 0);
+  const ot50Hours = Math.max(0, Number(vars.ot50) || 0);
+  const ot25Amount = Math.round(hourlyRate * 1.25 * ot25Hours * 100) / 100;
+  const ot50Amount = Math.round(hourlyRate * 1.50 * ot50Hours * 100) / 100;
+  const taxableBonus = Math.max(0, Number(vars.bonus) || 0);
+
+  // Déduction absences non rémunérées (Base légale : 26 jours ouvrables / mois)
+  const unpaidDays = getUnpaidDaysInPeriod(emp.id, periodStr, leavesList, absencesList);
+  const absenceDeduction = Math.round((baseSalary / 26) * unpaidDays * 100) / 100;
+
+  // Salaire Brut Imposable (SBI)
+  const grossTaxable = Math.max(0, Math.round((baseSalary + seniorityBonus + ot25Amount + ot50Amount + taxableBonus - absenceDeduction) * 100) / 100);
+
+  // Indemnité de transport exonérée (Plafond légal : 500 MAD zone urbaine / 750 MAD hors périmètre)
+  const transportExempt = Math.max(0, Number(emp.transportAllowance) || 0);
+  const grossTotal = Math.round((grossTaxable + transportExempt) * 100) / 100;
+
+  // Cotisations sociales salariales Maroc :
+  // 1. CNSS Prestations Sociales & IPE : 4,48% plafonnée à 6 000 MAD / mois
+  const cnssBase = Math.min(grossTaxable, 6000);
+  const cnssEmployee = Math.round(cnssBase * 0.0448 * 100) / 100;
+
+  // 2. AMO (Assurance Maladie Obligatoire) : 2,26% sans plafond
+  const amoEmployee = Math.round(grossTaxable * 0.0226 * 100) / 100;
+
+  // 3. Frais Professionnels (Loi de Finances Maroc) :
+  // - 35% plafonnés à 2 500 MAD/mois (30 000/an) si SBI <= 6 500 MAD/mois
+  // - 25% plafonnés à 2 916,67 MAD/mois (35 000/an) si SBI > 6 500 MAD/mois
+  const profExpRate = grossTaxable <= 6500 ? 0.35 : 0.25;
+  const profExpCap = grossTaxable <= 6500 ? 2500 : 2916.67;
+  const profExpenses = Math.round(Math.min(grossTaxable * profExpRate, profExpCap) * 100) / 100;
+
+  // Salaire Net Imposable (SNI)
+  const netTaxable = Math.max(0, Math.round((grossTaxable - cnssEmployee - amoEmployee - profExpenses) * 100) / 100);
+
+  // Barème mensuel de l'Impôt sur le Revenu (IR Maroc - CGI)
+  // Tranches mensuelles : [Plafond, Taux, Somme à déduire]
+  const irBrackets = [
+    { max: 3333.33, rate: 0.00, deduct: 0.00 },
+    { max: 5000.00, rate: 0.10, deduct: 333.33 },
+    { max: 6666.67, rate: 0.20, deduct: 833.33 },
+    { max: 8333.33, rate: 0.30, deduct: 1500.00 },
+    { max: 15000.00, rate: 0.34, deduct: 1833.33 },
+    { max: Infinity, rate: 0.37, deduct: 2283.33 }
+  ];
+  const bracket = irBrackets.find(b => netTaxable <= b.max) || irBrackets[irBrackets.length - 1];
+  const irBrut = Math.max(0, netTaxable * bracket.rate - bracket.deduct);
+
+  // Déductions pour charges de famille : 500 MAD/an (41,67 MAD/mois) par personne à charge (max 6 = 250 MAD/mois)
+  const dependents = Math.min(6, (emp.married ? 1 : 0) + (Number(emp.children) || 0));
+  const familyDeduction = Math.round(dependents * 41.67 * 100) / 100;
+  const irNet = Math.max(0, Math.round((irBrut - familyDeduction) * 100) / 100);
+
+  // Avance / acompte sur salaire
+  const advance = Math.max(0, Number(vars.advance) || 0);
+
+  // Net à payer
+  const netPayable = Math.max(0, Math.round((grossTotal - cnssEmployee - amoEmployee - irNet - advance) * 100) / 100);
+
+  // Charges patronales indicatives (CNSS AF 6,40% + PS 8,98% plafonné + TFP 1,60% + AMO 4,11%)
+  const employerCost = Math.round((
+    Math.min(grossTaxable, 6000) * 0.0898 +
+    grossTaxable * (0.0640 + 0.0160 + 0.0411)
+  ) * 100) / 100;
+
+  return {
+    baseSalary,
+    seniorityRate,
+    seniorityBonus,
+    ot25Hours,
+    ot50Hours,
+    ot25Amount,
+    ot50Amount,
+    taxableBonus,
+    unpaidDays,
+    absenceDeduction,
+    grossTaxable,
+    transportExempt,
+    grossTotal,
+    cnssEmployee,
+    amoEmployee,
+    profExpRate,
+    profExpenses,
+    netTaxable,
+    irRate: bracket.rate,
+    dependents,
+    familyDeduction,
+    irNet,
+    advance,
+    netPayable,
+    employerCost
+  };
+}
+
 function loadDb() {
   try {
     const raw = localStorage.getItem(DB_KEY);
@@ -930,13 +1168,10 @@ function loadDb() {
     if (memoryFallback) return memoryFallback;
   }
   const seed = createSeedData();
-  // loadDb runs before the db binding is initialized, so persist the seed directly.
   memoryFallback = seed;
   try {
     localStorage.setItem(DB_KEY, JSON.stringify(seed));
-  } catch (e) {
-    // Keep the seed in memory when browser storage is unavailable.
-  }
+  } catch (e) {}
   return seed;
 }
 
@@ -1062,7 +1297,6 @@ function computeKPIs() {
   const pastTrIds = new Set(db.trainings.filter(t => t.date < today).map(t => t.id));
   const pastEnrolls = db.enrollments.filter(e => pastTrIds.has(e.trainingId));
   const presentEnrolls = pastEnrolls.filter(e => e.present === true);
-  // The denominator is all enrolled participants, not only those already marked.
   const kpi2 = pastEnrolls.length > 0 ? Math.round((presentEnrolls.length / pastEnrolls.length) * 100) : 0;
 
   let kpi3 = 0;
@@ -1230,10 +1464,12 @@ function routeView(hash, user, isRh) {
   if (hash.startsWith('#/emp/requests')) return viewEmpRequests(user);
   if (hash.startsWith('#/emp/absences')) return viewEmpAbsences(user);
   if (hash.startsWith('#/emp/trainings')) return viewEmpTrainings(user);
+  if (hash.startsWith('#/emp/payslips')) return viewEmpPayslips(user);
   if (hash.startsWith('#/hr/dashboard')) return viewHrDashboard();
   if (hash.startsWith('#/hr/requests')) return viewHrRequests();
   if (hash.startsWith('#/hr/absences')) return viewHrAbsences();
   if (hash.startsWith('#/hr/trainings')) return viewHrTrainings();
+  if (hash.startsWith('#/hr/payroll')) return viewHrPayroll();
   if (hash.startsWith('#/hr/employees')) return viewHrEmployees();
   if (hash.startsWith('#/hr/change')) return viewHrChange();
   return isRh ? viewHrDashboard() : viewEmpHome(user);
@@ -1255,12 +1491,12 @@ function viewLogin() {
           </div>
         </div>
         <div style="margin-top:clamp(36px,7vh,78px);">
-          <span class="login-kicker"><i data-lucide="layers" style="width:15px;height:15px;"></i> Gestion des ressources humaines</span>
+          <span class="login-kicker"><i data-lucide="layers" style="width:15px;height:15px;"></i> Gestion des ressources humaines & Paie Maroc</span>
           <h1>La gestion RH,<br><span style="color:#78D3CD;">plus simple.</span></h1>
-          <p>Une plateforme centralisée pour digitaliser les demandes de congés, le suivi des absences et la gestion des formations au sein d'Atlas Services SARL.</p>
+          <p>Une plateforme centralisée pour digitaliser les demandes de congés, le suivi des absences, les formations et l'édition des bulletins de paie conformes au droit marocain.</p>
           <div class="login-feature-grid">
-            <div class="login-feature"><i data-lucide="calendar-check" style="color:#79D4CE;width:20px;height:20px;"></i><div><strong>Congés simplifiés</strong><span>Demandes, soldes et validations</span></div></div>
-            <div class="login-feature"><i data-lucide="calendar-clock" style="color:#79D4CE;width:20px;height:20px;"></i><div><strong>Absences suivies</strong><span>Vision centralisée des équipes</span></div></div>
+            <div class="login-feature"><i data-lucide="calendar-check" style="color:#79D4CE;width:20px;height:20px;"></i><div><strong>Congés & Absences</strong><span>Demandes, soldes et validations</span></div></div>
+            <div class="login-feature"><i data-lucide="banknote" style="color:#79D4CE;width:20px;height:20px;"></i><div><strong>Paie Maroc (CGI)</strong><span>CNSS, AMO, IR et bulletins MAD</span></div></div>
             <div class="login-feature"><i data-lucide="graduation-cap" style="color:#79D4CE;width:20px;height:20px;"></i><div><strong>Formations pilotées</strong><span>Sessions, inscriptions et présence</span></div></div>
           </div>
         </div>
@@ -1283,7 +1519,7 @@ function viewLogin() {
             <div style="flex:1;min-width:0;">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><strong style="font-size:13px;color:var(--primary-dark);">Youssef Benali</strong><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:#8B9AA1;"></i></div>
               <span class="badge badge-primary" style="margin:5px 0 7px;">Espace salarié</span>
-              <p style="font-size:11.5px;color:var(--muted);">Technicien Exploitation · Casablanca<br>Gérer mes congés, consulter mes absences et rejoindre les formations.</p>
+              <p style="font-size:11.5px;color:var(--muted);">Technicien Exploitation · Casablanca<br>Gérer mes congés, consulter mes bulletins de paie et rejoindre les formations.</p>
             </div>
           </button>
           <button class="login-profile" onclick="loginWithRole('rh')">
@@ -1291,11 +1527,11 @@ function viewLogin() {
             <div style="flex:1;min-width:0;">
               <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><strong style="font-size:13px;color:var(--primary-dark);">Salma El Idrissi</strong><i data-lucide="arrow-up-right" style="width:16px;height:16px;color:#8B9AA1;"></i></div>
               <span class="badge" style="margin:5px 0 7px;background:var(--accent-light);color:#A6532E;">Gestionnaire RH</span>
-              <p style="font-size:11.5px;color:var(--muted);">Responsable RH · Casablanca & Rabat<br>Valider les demandes, gérer les équipes et suivre les indicateurs.</p>
+              <p style="font-size:11.5px;color:var(--muted);">Responsable RH · Casablanca & Rabat<br>Valider les demandes, calculer la paie marocaine et suivre les indicateurs.</p>
             </div>
           </button>
         </div>
-        <div class="login-note"><i data-lucide="info" style="width:17px;height:17px;flex-shrink:0;color:var(--primary);"></i><span><strong>Prototype pédagogique :</strong> les données sont fictives et enregistrées localement dans ce navigateur. Cette version ne dispose pas encore d'une base de données partagée entre plusieurs appareils.</span></div>
+        <div class="login-note"><i data-lucide="info" style="width:17px;height:17px;flex-shrink:0;color:var(--primary);"></i><span><strong>Prototype pédagogique :</strong> les données sont fictives et enregistrées localement dans ce navigateur. Les calculs de paie respectent les règles CNSS, AMO et IR du Maroc.</span></div>
         <div class="login-footer">Cas étudié : Atlas Services SARL (entreprise fictive) · Hypothèse de 90 salariés répartis entre Casablanca et Rabat.<br>Projet de digitalisation de la fonction RH.</div>
       </div>
     </section>
@@ -1324,6 +1560,7 @@ function renderSidebar(hash, isRh) {
     { href: '#/hr/requests', icon: 'check-square', label: 'Demandes à valider', pill: pendingCnt },
     { href: '#/hr/absences', icon: 'calendar-x', label: 'Absences' },
     { href: '#/hr/trainings', icon: 'graduation-cap', label: 'Formations' },
+    { href: '#/hr/payroll', icon: 'banknote', label: 'Gestion de la paie' },
     { href: '#/hr/employees', icon: 'users', label: 'Employés' },
     { href: '#/hr/change', icon: 'chart-no-axes-combined', label: 'Indicateurs & qualité' }
   ] : [
@@ -1332,7 +1569,8 @@ function renderSidebar(hash, isRh) {
     { href: '#/emp/new', icon: 'calendar-plus', label: 'Nouvelle demande' },
     { href: '#/emp/requests', icon: 'file-text', label: 'Mes demandes' },
     { href: '#/emp/absences', icon: 'calendar-off', label: 'Mes absences' },
-    { href: '#/emp/trainings', icon: 'graduation-cap', label: 'Formations' }
+    { href: '#/emp/trainings', icon: 'graduation-cap', label: 'Formations' },
+    { href: '#/emp/payslips', icon: 'receipt-text', label: 'Mes bulletins de paie' }
   ];
 
   return `
@@ -1421,7 +1659,7 @@ function renderTopbar(user, isRh) {
             <i data-lucide="repeat"></i> Changer de rôle (${isRh ? 'Passer Salarié' : 'Passer RH'})
           </button>
           <button class="dropdown-item" onclick="relaunchTour()">
-            <i data-lucide="sparkles"></i> Visite guidée (5 étapes)
+            <i data-lucide="sparkles"></i> Visite guidée (4 étapes)
           </button>
           <div style="padding:8px 16px 4px;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;">Mode démo</div>
           <button class="dropdown-item" onclick="resetDemo(false)">
@@ -1444,13 +1682,13 @@ function renderMobileNav(hash, isRh) {
   const items = isRh ? [
     { href: '#/hr/dashboard', icon: 'layout-dashboard', label: 'Board' },
     { href: '#/hr/requests', icon: 'check-square', label: 'Congés' },
-    { href: '#/hr/trainings', icon: 'graduation-cap', label: 'Formations' },
-    { href: '#/hr/absences', icon: 'calendar-x', label: 'Absences' }
+    { href: '#/hr/payroll', icon: 'banknote', label: 'Paie' },
+    { href: '#/hr/trainings', icon: 'graduation-cap', label: 'Formations' }
   ] : [
     { href: '#/emp/home', icon: 'home', label: 'Accueil' },
     { href: '#/emp/new', icon: 'calendar-plus', label: 'Demander' },
-    { href: '#/emp/requests', icon: 'file-text', label: 'Suivi' },
-    { href: '#/emp/absences', icon: 'calendar-off', label: 'Absences' }
+    { href: '#/emp/payslips', icon: 'receipt-text', label: 'Paie' },
+    { href: '#/emp/trainings', icon: 'graduation-cap', label: 'Formations' }
   ];
   return `<nav class="mobile-nav" aria-label="Navigation mobile">
     ${items.map(i => `<a href="${i.href}" class="${hash.startsWith(i.href) ? 'active' : ''}">
@@ -1555,9 +1793,9 @@ function relaunchTour() {
 function renderTourOverlay() {
   const steps = [
     { title: '1. Bienvenue sur Atlas RH', text: 'Cette plateforme remplace les formulaires papier et fichiers Excel pour les 90 salariés d’Atlas Services SARL (Casablanca & Rabat).' },
-    { title: '2. Vos processus RH centralisés', text: 'Soumettez vos congés en calcul automatique des jours ouvrés (lundi-vendredi), consultez vos absences et inscrivez-vous aux formations.' },
+    { title: '2. Vos processus RH & Paie Maroc', text: 'Soumettez vos congés en jours ouvrés, consultez vos absences, inscrivez-vous aux formations et téléchargez vos bulletins de paie en Dirhams.' },
     { title: '3. Bascule Salarié / Gestionnaire RH', text: 'Utilisez le menu avatar en haut à droite pour basculer instantanément entre Youssef Benali (Salarié) et Salma El Idrissi (RH).' },
-    { title: '4. Pilotage RH', text: 'Côté RH, le tableau de bord centralise les demandes, les absences, les formations et les indicateurs de suivi.' }
+    { title: '4. Pilotage RH & Paie', text: 'Côté RH, gérez les validations de congés, préparez la paie (CNSS, AMO, IR CGI) et publiez les bulletins.' }
   ];
   const s = steps[uiState.tourStep] || steps[0];
   return `
@@ -1614,8 +1852,8 @@ function viewEmpHome(user) {
     <div class="emp-hero-copy">
       <div class="hero-eyebrow"><span class="live-dot"></span> ESPACE COLLABORATEUR <span class="hero-sep">/</span> ${esc(user.site)}</div>
       <h1>${greeting}, ${esc(user.name.split(' ')[0])} <span class="hero-wave">✦</span></h1>
-      <p>Congés, absences et formations — vos services RH en un coup d’œil.</p>
-      <div class="emp-hero-actions"><a href="#/emp/new" class="btn btn-light"><i data-lucide="plus-circle"></i> Nouvelle demande</a><a href="#/emp/trainings" class="hero-text-link">Explorer les formations <i data-lucide="arrow-up-right"></i></a></div>
+      <p>Congés, absences, formations et bulletins de paie — vos services RH en un coup d’œil.</p>
+      <div class="emp-hero-actions"><a href="#/emp/new" class="btn btn-light"><i data-lucide="plus-circle"></i> Nouvelle demande</a><a href="#/emp/payslips" class="hero-text-link">Mes bulletins de paie <i data-lucide="arrow-up-right"></i></a></div>
     </div>
     <div class="emp-hero-side"><div class="hero-date-label">AUJOURD’HUI</div><div class="hero-date">${new Date().toLocaleDateString('fr-FR',{day:'2-digit'})}</div><div class="hero-month">${new Date().toLocaleDateString('fr-FR',{month:'long',year:'numeric'})}</div><div class="hero-date-line"></div><div class="hero-date-caption">${todayLabel}</div></div>
     <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
@@ -1636,7 +1874,7 @@ function viewEmpHome(user) {
   <section class="quick-actions-grid">
     <a href="#/emp/new" class="quick-action qa-teal"><span class="qa-icon"><i data-lucide="calendar-plus"></i></span><span><strong>Demander un congé</strong><small>Nouvelle période</small></span><i data-lucide="arrow-up-right" class="qa-arrow"></i></a>
     <a href="#/emp/requests" class="quick-action qa-blue"><span class="qa-icon"><i data-lucide="file-clock"></i></span><span><strong>Suivre mes demandes</strong><small>Statut & décisions</small></span><i data-lucide="arrow-up-right" class="qa-arrow"></i></a>
-    <a href="#/emp/absences" class="quick-action qa-orange"><span class="qa-icon"><i data-lucide="calendar-days"></i></span><span><strong>Mes absences</strong><small>Historique</small></span><i data-lucide="arrow-up-right" class="qa-arrow"></i></a>
+    <a href="#/emp/payslips" class="quick-action qa-orange"><span class="qa-icon"><i data-lucide="receipt-text"></i></span><span><strong>Mes bulletins de paie</strong><small>Fiches de salaire MAD</small></span><i data-lucide="arrow-up-right" class="qa-arrow"></i></a>
     <a href="#/emp/trainings" class="quick-action qa-purple"><span class="qa-icon"><i data-lucide="book-open-check"></i></span><span><strong>Choisir une formation</strong><small>Catalogue & inscriptions</small></span><i data-lucide="arrow-up-right" class="qa-arrow"></i></a>
   </section>
 
@@ -1682,7 +1920,7 @@ function renderAvailableDatesCalendar(user) {
   const year = base.getFullYear();
   const month = base.getMonth();
   const monthLabel = base.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' });
-  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7; // Mon=0
+  const firstDow = (new Date(year, month, 1).getDay() + 6) % 7;
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const todayStr = isoDate(0);
 
@@ -1724,7 +1962,7 @@ function renderAvailableDatesCalendar(user) {
         <button type="button" class="btn btn-outline btn-sm" onclick="uiState.empCalOffset++;render();">▶</button>
       </div>
     </div>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Sélectionnez d'abord votre <strong>date de début</strong>, puis votre <strong>date de fin</strong>. Les jours ouvrés libres sont cliquables ; les week-ends et vos propres congés sont bloqués. Les collègues absents sont signalés sans bloquer la demande.</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Sélectionnez d'abord votre <strong>date de début</strong>, puis votre <strong>date de fin</strong>. Les jours ouvrés libres sont cliquables ; les week-ends et vos propres congés sont bloqués.</p>
     <div class="cal-grid">
       ${['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'].map(j => `<div class="cal-head">${j}</div>`).join('')}
       ${cells}
@@ -1784,7 +2022,7 @@ function viewEmpNewLeave(user) {
           <option value="annuel" ${f.type === 'annuel' ? 'selected' : ''}>Congé annuel payé (déduit du solde de 18 j)</option>
           <option value="maladie" ${f.type === 'maladie' ? 'selected' : ''}>Congé maladie (justificatif simulé)</option>
           <option value="exceptionnel" ${f.type === 'exceptionnel' ? 'selected' : ''}>Congé exceptionnel (événement familial)</option>
-          <option value="sans solde" ${f.type === 'sans solde' ? 'selected' : ''}>Congé sans solde</option>
+          <option value="sans solde" ${f.type === 'sans solde' ? 'selected' : ''}>Congé sans solde (impacte la paie)</option>
         </select>
       </div>
 
@@ -1813,7 +2051,7 @@ function viewEmpNewLeave(user) {
         <label class="form-label" for="lv-att">Justificatif médical (simulation pièce jointe)</label>
         <input type="file" id="lv-att" class="form-control" onchange="updateLeaveField('attachment', this.value.split('\\\\').pop() || 'certificat_medical.pdf')">
         <div style="font-size:12px;color:var(--primary-dark);margin-top:4px;">
-          ${f.attachment ? `Fichier prêt : <strong>${esc(f.attachment)}</strong>` : 'Format PDF/JPG accepté (aucun fichier envoyé sur serveur dans ce prototype).'}
+          ${f.attachment ? `Fichier prêt : <strong>${esc(f.attachment)}</strong>` : 'Format PDF/JPG accepté.'}
         </div>
       </div>` : ''}
 
@@ -2136,6 +2374,476 @@ function toggleTrainingEnroll(trainingId) {
 }
 
 /* ============================================================================
+   6B. PAYROLL VIEWS & ACTIONS (MAROC : CNSS, AMO, IR CGI, BULLETINS)
+============================================================================ */
+function renderPayslipDocument(slip) {
+  const emp = db.employees.find(e => e.id === slip.empId) || {};
+  const rowLine = (code, label, base, rate, gain, retenue) => `
+    <tr>
+      <td style="color:var(--muted);">${code}</td>
+      <td><strong>${label}</strong></td>
+      <td style="text-align:right;">${base || '—'}</td>
+      <td style="text-align:right;">${rate || '—'}</td>
+      <td style="text-align:right;color:var(--success);font-weight:600;">${gain > 0 ? formatMAD(gain) : ''}</td>
+      <td style="text-align:right;color:var(--danger);font-weight:600;">${retenue > 0 ? formatMAD(retenue) : ''}</td>
+    </tr>`;
+
+  return `
+  <div class="payslip-doc">
+    <div class="payslip-header">
+      <div>
+        <div style="font-family:'Poppins',sans-serif;font-weight:800;font-size:18px;color:var(--primary-dark);">ATLAS SERVICES SARL</div>
+        <div style="font-size:11.5px;color:var(--muted);">Zone Industrielle Sidi Maarouf, Casablanca • RC 418920 • IF 33948102 • Affilié CNSS N° 8492014</div>
+      </div>
+      <div style="text-align:right;">
+        <span class="badge badge-primary" style="font-size:11px;margin-bottom:4px;">BULLETIN DE PAIE</span>
+        <div style="font-weight:700;font-size:14px;text-transform:capitalize;color:var(--primary-dark);">${esc(formatPeriodLabel(slip.period))}</div>
+        <div style="font-size:11px;color:var(--muted);">Conforme Code du Travail & CGI Maroc</div>
+      </div>
+    </div>
+
+    <div class="payslip-meta-grid">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;">Collaborateur</div>
+        <div style="font-weight:700;font-size:14px;color:var(--primary-dark);margin:2px 0;">${esc(emp.name || 'Collaborateur')}</div>
+        <div>Matricule : <strong>${esc(emp.matricule || 'ATL-000')}</strong> • N° CNSS : <strong>${esc(emp.cnss || '—')}</strong></div>
+        <div>Fonction / Service : ${esc(emp.service || '')} (${esc(emp.site || '')})</div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;">Situation fiscale & ancienneté</div>
+        <div style="margin-top:2px;">Situation familiale : <strong>${emp.married ? 'Marié(e)' : 'Célibataire'}</strong> • Enfants à charge : <strong>${emp.children || 0}</strong></div>
+        <div>Personnes à charge (IR) : <strong>${slip.dependents}</strong> (Déduction : ${formatMAD(slip.familyDeduction)})</div>
+        <div>Ancienneté (embauche ${emp.hireYear || 2022}) : <strong>${Math.round(slip.seniorityRate * 100)} %</strong></div>
+      </div>
+    </div>
+
+    <table class="payslip-table">
+      <thead>
+        <tr>
+          <th style="width:52px;">Code</th>
+          <th>Rubrique de paie</th>
+          <th style="text-align:right;">Base</th>
+          <th style="text-align:right;">Taux / Qté</th>
+          <th style="text-align:right;">Gains (+)</th>
+          <th style="text-align:right;">Retenues (−)</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rowLine('100', 'Salaire de base mensuel', formatMAD(slip.baseSalary), '26 j', slip.baseSalary, 0)}
+        ${slip.seniorityBonus > 0 ? rowLine('110', 'Prime d’ancienneté légale', formatMAD(slip.baseSalary), `${Math.round(slip.seniorityRate * 100)} %`, slip.seniorityBonus, 0) : ''}
+        ${slip.ot25Hours > 0 ? rowLine('120', 'Heures supplémentaires jour (+25 %)', formatMAD(slip.baseSalary / 191), `${slip.ot25Hours} h`, slip.ot25Amount, 0) : ''}
+        ${slip.ot50Hours > 0 ? rowLine('125', 'Heures supplémentaires nuit/repos (+50 %)', formatMAD(slip.baseSalary / 191), `${slip.ot50Hours} h`, slip.ot50Amount, 0) : ''}
+        ${slip.taxableBonus > 0 ? rowLine('130', 'Prime de rendement / variable imposable', '', '', slip.taxableBonus, 0) : ''}
+        ${slip.unpaidDays > 0 ? rowLine('210', 'Retenue absences non rémunérées', formatMAD(slip.baseSalary / 26), `${slip.unpaidDays} j`, 0, slip.absenceDeduction) : ''}
+        <tr class="sub-total">
+          <td colspan="4">SALAIRE BRUT IMPOSABLE (SBI)</td>
+          <td style="text-align:right;">${formatMAD(slip.grossTaxable)}</td>
+          <td></td>
+        </tr>
+        ${slip.transportExempt > 0 ? rowLine('150', 'Indemnité de transport (exonérée plafond légal)', '', 'Forfait', slip.transportExempt, 0) : ''}
+        <tr class="sub-total">
+          <td colspan="4">SALAIRE BRUT GLOBAL</td>
+          <td style="text-align:right;">${formatMAD(slip.grossTotal)}</td>
+          <td></td>
+        </tr>
+        ${rowLine('310', 'Cotisation CNSS salariale (plafonnée à 6 000 MAD)', formatMAD(Math.min(slip.grossTaxable, 6000)), '4,48 %', 0, slip.cnssEmployee)}
+        ${rowLine('320', 'Cotisation AMO salariale (Assurance Maladie)', formatMAD(slip.grossTaxable), '2,26 %', 0, slip.amoEmployee)}
+        <tr>
+          <td style="color:var(--muted);">400</td>
+          <td>Frais professionnels déductibles (${Math.round(slip.profExpRate * 100)} % plafonnés)</td>
+          <td style="text-align:right;">${formatMAD(slip.grossTaxable)}</td>
+          <td style="text-align:right;">${Math.round(slip.profExpRate * 100)} %</td>
+          <td colspan="2" style="text-align:right;color:var(--muted);">Déduit : ${formatMAD(slip.profExpenses)}</td>
+        </tr>
+        <tr class="sub-total">
+          <td colspan="4">SALAIRE NET IMPOSABLE (SNI)</td>
+          <td colspan="2" style="text-align:right;">${formatMAD(slip.netTaxable)}</td>
+        </tr>
+        ${rowLine('510', `Impôt sur le Revenu (IR net après déduction famille)`, formatMAD(slip.netTaxable), `${Math.round(slip.irRate * 100)} %`, 0, slip.irNet)}
+        ${slip.advance > 0 ? rowLine('610', 'Acompte / Avance sur salaire', '', '', 0, slip.advance) : ''}
+      </tbody>
+    </table>
+
+    <div class="payslip-net-box">
+      <div>
+        <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#A7DAD8;font-weight:700;">Net à payer en Dirhams</div>
+        <div style="font-size:11px;color:#D4ECEB;">Virement bancaire • Charges patronales indicatives : ${formatMAD(slip.employerCost)}</div>
+      </div>
+      <div style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:800;">${formatMAD(slip.netPayable)}</div>
+    </div>
+  </div>`;
+}
+
+function openPayslipModal(slipId) {
+  const slip = db.payrollRuns.find(p => p.id === slipId);
+  if (!slip) return;
+  openModal(
+    `Bulletin de paie — ${getEmpName(slip.empId)}`,
+    renderPayslipDocument(slip),
+    `<button class="btn btn-outline" onclick="closeModal()">Fermer</button>
+     <button class="btn btn-primary" onclick="printPayslip()"><i data-lucide="printer"></i> Imprimer / Enregistrer PDF</button>`
+  );
+}
+
+function previewLivePayslip(empId, period) {
+  const emp = db.employees.find(e => e.id === empId);
+  if (!emp) return;
+  const vars = (db.payrollVars[period] || {})[empId] || {};
+  const calc = calculateMoroccanPayroll(emp, period, vars);
+  openModal(
+    `Simulation bulletin — ${emp.name}`,
+    renderPayslipDocument({ period, empId, ...calc }),
+    `<button class="btn btn-outline" onclick="closeModal()">Fermer</button>
+     <button class="btn btn-primary" onclick="printPayslip()"><i data-lucide="printer"></i> Imprimer / PDF</button>`
+  );
+}
+
+function printPayslip() {
+  document.body.classList.add('print-slip');
+  window.print();
+  setTimeout(() => document.body.classList.remove('print-slip'), 500);
+}
+
+function viewEmpPayslips(user) {
+  const mySlips = db.payrollRuns
+    .filter(p => p.empId === user.id && p.status === 'Publié')
+    .sort((a, b) => b.period.localeCompare(a.period));
+  const latest = mySlips[0];
+
+  return `
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Mes bulletins de paie</h1>
+      <p class="page-sub">Consultez et téléchargez vos bulletins dématérialisés conformes à la législation marocaine.</p>
+    </div>
+  </div>
+
+  <div class="grid-3" style="margin-bottom:20px;">
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--primary-light);color:var(--primary);"><i data-lucide="wallet"></i></div>
+      <div><div class="stat-val">${formatMAD(user.baseSalary)}</div><div class="stat-lbl">Salaire de base contractuel</div></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--success-light);color:var(--success);"><i data-lucide="banknote"></i></div>
+      <div><div class="stat-val">${latest ? formatMAD(latest.netPayable) : '—'}</div><div class="stat-lbl">Dernier net perçu (${latest ? formatPeriodLabel(latest.period) : 'N/A'})</div></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--gold-light);color:#8A5A00;"><i data-lucide="award"></i></div>
+      <div><div class="stat-val">${Math.round(getSeniorityRate(user.hireYear) * 100)} %</div><div class="stat-lbl">Prime d’ancienneté (embauche ${user.hireYear})</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>Historique des bulletins publiés (${mySlips.length})</span><span class="badge badge-primary">Matricule ${esc(user.matricule)}</span></div>
+    ${mySlips.length === 0 ? `
+      <div class="empty-state">
+        <i data-lucide="receipt-text"></i>
+        <strong>Aucun bulletin publié</strong>
+        <span>Vos fiches de paie apparaîtront ici dès leur validation par le service RH.</span>
+      </div>` : `
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Période</th>
+            <th>Salaire Brut Imposable</th>
+            <th>CNSS + AMO</th>
+            <th>IR retenu</th>
+            <th>Net à payer</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${mySlips.map(s => `
+            <tr>
+              <td style="font-weight:700;text-transform:capitalize;">${esc(formatPeriodLabel(s.period))}</td>
+              <td>${formatMAD(s.grossTaxable)}</td>
+              <td style="color:var(--muted);">${formatMAD(s.cnssEmployee + s.amoEmployee)}</td>
+              <td style="color:var(--muted);">${formatMAD(s.irNet)}</td>
+              <td><strong style="color:var(--success);font-size:14px;">${formatMAD(s.netPayable)}</strong></td>
+              <td>
+                <button class="btn btn-primary btn-sm" onclick="openPayslipModal('${s.id}')">
+                  <i data-lucide="eye"></i> Consulter / PDF
+                </button>
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`}
+  </div>`;
+}
+
+function viewHrPayroll() {
+  const period = uiState.payPeriod;
+  const periodSlips = db.payrollRuns.filter(p => p.period === period);
+  const runStatus = periodSlips.length === 0
+    ? 'Non générée'
+    : periodSlips.some(p => p.status === 'Brouillon')
+      ? 'Brouillon'
+      : periodSlips.some(p => p.status === 'Validé')
+        ? 'Validé'
+        : 'Publié';
+  const isEditable = runStatus === 'Non générée' || runStatus === 'Brouillon';
+
+  const liveRows = db.employees
+    .filter(e => !uiState.paySearch.trim() || e.name.toLowerCase().includes(uiState.paySearch.toLowerCase()) || e.service.toLowerCase().includes(uiState.paySearch.toLowerCase()))
+    .map(emp => {
+      const saved = periodSlips.find(p => p.empId === emp.id);
+      const vars = (db.payrollVars[period] || {})[emp.id] || { ot25: 0, ot50: 0, bonus: 0, advance: 0 };
+      const calc = saved && !isEditable ? saved : calculateMoroccanPayroll(emp, period, vars);
+      return { emp, vars, calc, saved };
+    });
+
+  const totGross = liveRows.reduce((s, r) => s + r.calc.grossTotal, 0);
+  const totSocialTax = liveRows.reduce((s, r) => s + r.calc.cnssEmployee + r.calc.amoEmployee + r.calc.irNet, 0);
+  const totNet = liveRows.reduce((s, r) => s + r.calc.netPayable, 0);
+  const totEmployer = liveRows.reduce((s, r) => s + r.calc.employerCost, 0);
+
+  const periodOptions = Array.from({ length: 4 }, (_, i) => {
+    const d = new Date();
+    d.setDate(1);
+    d.setMonth(d.getMonth() - i);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  });
+
+  return `
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Gestion de la paie (Réglementation Maroc)</h1>
+      <p class="page-sub">Calcul automatique selon le Code du Travail et le CGI : ancienneté, heures sup (+25%/+50%), CNSS (4,48%), AMO (2,26%), frais pro et IR progressif.</p>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="openMoroccanTaxRulesModal()"><i data-lucide="scale"></i> Barèmes Maroc</button>
+      <button class="btn btn-outline" onclick="exportPayrollCSV('${period}')"><i data-lucide="download"></i> Journal CSV</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div>
+        <label class="form-label" style="margin-bottom:3px;font-size:11px;">PÉRIODE DE PAIE</label>
+        <select class="form-control" style="min-width:190px;text-transform:capitalize;" onchange="uiState.payPeriod=this.value;render();">
+          ${periodOptions.map(p => `<option value="${p}" ${p === period ? 'selected' : ''}>${esc(formatPeriodLabel(p))}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;">ÉTAT DU LOT</div>
+        <span class="badge ${runStatus === 'Publié' ? 'badge-green' : runStatus === 'Validé' ? 'badge-primary' : 'badge-gold'}" style="font-size:12px;padding:6px 12px;">
+          ${runStatus}
+        </span>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      ${isEditable ? `
+        <button class="btn btn-primary" onclick="generatePayrollBatch('${period}')">
+          <i data-lucide="calculator"></i> ${runStatus === 'Brouillon' ? 'Recalculer la paie' : 'Générer le lot de paie'}
+        </button>` : ''}
+      ${runStatus === 'Brouillon' ? `
+        <button class="btn btn-success" onclick="validatePayrollBatch('${period}')">
+          <i data-lucide="check-circle-2"></i> Valider le lot
+        </button>` : ''}
+      ${runStatus === 'Validé' ? `
+        <button class="btn btn-accent" onclick="publishPayrollBatch('${period}')">
+          <i data-lucide="send"></i> Publier les bulletins aux salariés
+        </button>` : ''}
+      ${runStatus === 'Publié' ? `
+        <button class="btn btn-outline btn-sm" onclick="reopenPayrollBatch('${period}')">
+          <i data-lucide="unlock"></i> Réouvrir en brouillon
+        </button>` : ''}
+    </div>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:20px;">
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--primary-light);color:var(--primary);"><i data-lucide="layers"></i></div>
+      <div><div class="stat-val" style="font-size:19px;">${formatMAD(totGross)}</div><div class="stat-lbl">Masse salariale brute</div></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--accent-light);color:var(--accent);"><i data-lucide="landmark"></i></div>
+      <div><div class="stat-val" style="font-size:19px;">${formatMAD(totSocialTax)}</div><div class="stat-lbl">Retenues CNSS + AMO + IR</div></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--success-light);color:var(--success);"><i data-lucide="banknote"></i></div>
+      <div><div class="stat-val" style="font-size:19px;">${formatMAD(totNet)}</div><div class="stat-lbl">Total Net à payer</div></div>
+    </div>
+    <div class="stat-tile">
+      <div class="stat-icon" style="background:var(--gold-light);color:#8A5A00;"><i data-lucide="building-2"></i></div>
+      <div><div class="stat-val" style="font-size:19px;">${formatMAD(totEmployer)}</div><div class="stat-lbl">Charges patronales estimées</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="table-toolbar">
+      <div>
+        <strong style="font-size:15px;">Grille de préparation de la paie — ${esc(formatPeriodLabel(period))}</strong>
+        <div style="font-size:12px;color:var(--muted);">Les congés sans solde validés et absences non justifiées du mois sont déduits automatiquement (base 26 j).</div>
+      </div>
+      <input type="search" class="form-control" style="max-width:240px;" placeholder="Filtrer salarié ou service..."
+             value="${esc(uiState.paySearch)}" oninput="uiState.paySearch=this.value;render();">
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Collaborateur</th>
+            <th>Base + Anc.</th>
+            <th>Abs. NP</th>
+            <th>H. Sup 25%</th>
+            <th>H. Sup 50%</th>
+            <th>Prime (MAD)</th>
+            <th>Avance</th>
+            <th>Brut Imp.</th>
+            <th>CNSS/AMO/IR</th>
+            <th>Net à payer</th>
+            <th>Bulletin</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${liveRows.map(({ emp, vars, calc, saved }) => `
+            <tr>
+              <td>
+                <div style="font-weight:700;">${esc(emp.name)}</div>
+                <div style="font-size:11.5px;color:var(--muted);">${esc(emp.matricule)} • ${esc(emp.service)} • ${emp.married ? 'M' : 'C'}/${emp.children} enf.</div>
+              </td>
+              <td>
+                <div>${formatMAD(calc.baseSalary)}</div>
+                <div style="font-size:11px;color:var(--primary);">+${Math.round(calc.seniorityRate * 100)}% (${formatMAD(calc.seniorityBonus)})</div>
+              </td>
+              <td>
+                ${calc.unpaidDays > 0
+                  ? `<span class="badge badge-red">${calc.unpaidDays} j (-${Math.round(calc.absenceDeduction)} DH)</span>`
+                  : `<span style="color:var(--muted);font-size:12px;">0 j</span>`}
+              </td>
+              <td>${isEditable ? `<input type="number" min="0" step="0.5" class="form-control pay-var-input" value="${vars.ot25 || 0}" onchange="updatePayrollVar('${period}','${emp.id}','ot25',this.value)">` : `${vars.ot25 || 0} h`}</td>
+              <td>${isEditable ? `<input type="number" min="0" step="0.5" class="form-control pay-var-input" value="${vars.ot50 || 0}" onchange="updatePayrollVar('${period}','${emp.id}','ot50',this.value)">` : `${vars.ot50 || 0} h`}</td>
+              <td>${isEditable ? `<input type="number" min="0" step="50" class="form-control pay-var-input" value="${vars.bonus || 0}" onchange="updatePayrollVar('${period}','${emp.id}','bonus',this.value)">` : formatMAD(vars.bonus || 0)}</td>
+              <td>${isEditable ? `<input type="number" min="0" step="100" class="form-control pay-var-input" value="${vars.advance || 0}" onchange="updatePayrollVar('${period}','${emp.id}','advance',this.value)">` : formatMAD(vars.advance || 0)}</td>
+              <td><strong>${formatMAD(calc.grossTaxable)}</strong></td>
+              <td style="font-size:11.5px;color:var(--muted);">
+                CNSS: ${calc.cnssEmployee.toFixed(0)}<br>
+                AMO: ${calc.amoEmployee.toFixed(0)} | IR: ${calc.irNet.toFixed(0)}
+              </td>
+              <td><strong style="color:var(--success);font-size:13.5px;">${formatMAD(calc.netPayable)}</strong></td>
+              <td>
+                ${saved
+                  ? `<button class="btn btn-outline btn-sm" onclick="openPayslipModal('${saved.id}')"><i data-lucide="file-text"></i> Voir</button>`
+                  : `<button class="btn btn-outline btn-sm" onclick="previewLivePayslip('${emp.id}','${period}')"><i data-lucide="eye"></i> Simuler</button>`}
+              </td>
+            </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>
+  </div>`;
+}
+
+function updatePayrollVar(period, empId, field, value) {
+  if (!db.payrollVars[period]) db.payrollVars[period] = {};
+  if (!db.payrollVars[period][empId]) db.payrollVars[period][empId] = { ot25: 0, ot50: 0, bonus: 0, advance: 0 };
+  db.payrollVars[period][empId][field] = Math.max(0, Number(value) || 0);
+  const existingIdx = db.payrollRuns.findIndex(p => p.period === period && p.empId === empId && p.status === 'Brouillon');
+  if (existingIdx >= 0) {
+    const emp = db.employees.find(e => e.id === empId);
+    const calc = calculateMoroccanPayroll(emp, period, db.payrollVars[period][empId]);
+    db.payrollRuns[existingIdx] = { ...db.payrollRuns[existingIdx], ...calc };
+  }
+  saveDb();
+  render();
+}
+
+function generatePayrollBatch(period) {
+  db.payrollRuns = db.payrollRuns.filter(p => p.period !== period);
+  db.employees.forEach(emp => {
+    const vars = (db.payrollVars[period] || {})[emp.id] || { ot25: 0, ot50: 0, bonus: 0, advance: 0 };
+    const calc = calculateMoroccanPayroll(emp, period, vars);
+    db.payrollRuns.push({
+      id: `pay_${period}_${emp.id}`,
+      period,
+      empId: emp.id,
+      status: 'Brouillon',
+      ...calc
+    });
+  });
+  saveDb();
+  recordEvent(getCurrentUser().id, 'generate_payroll');
+  toast(`Lot de paie calculé pour ${db.employees.length} collaborateurs (${formatPeriodLabel(period)}).`);
+  render();
+}
+
+function validatePayrollBatch(period) {
+  db.payrollRuns.filter(p => p.period === period).forEach(p => { p.status = 'Validé'; });
+  saveDb();
+  recordEvent(getCurrentUser().id, 'validate_payroll');
+  toast('Lot de paie contrôlé et validé.');
+  render();
+}
+
+function publishPayrollBatch(period) {
+  const label = formatPeriodLabel(period);
+  db.payrollRuns.filter(p => p.period === period).forEach(p => {
+    p.status = 'Publié';
+    p.publishedAt = isoDate(0);
+    db.notifications.push({
+      id: `nt_pay_${Date.now()}_${p.empId}`,
+      to: p.empId,
+      text: `Votre bulletin de paie de ${label} (${formatMAD(p.netPayable)}) est disponible dans votre espace.`,
+      ts: new Date().toISOString(),
+      read: false
+    });
+  });
+  saveDb();
+  recordEvent(getCurrentUser().id, 'publish_payroll');
+  toast(`Bulletins publiés et notifiés aux ${db.employees.length} collaborateurs !`);
+  render();
+}
+
+function reopenPayrollBatch(period) {
+  db.payrollRuns.filter(p => p.period === period).forEach(p => { p.status = 'Brouillon'; });
+  saveDb();
+  toast('Lot repassé en brouillon pour ajustement.', 'warning');
+  render();
+}
+
+function exportPayrollCSV(period) {
+  const rows = db.employees.map(emp => {
+    const saved = db.payrollRuns.find(p => p.period === period && p.empId === emp.id);
+    const vars = (db.payrollVars[period] || {})[emp.id] || {};
+    const c = saved || calculateMoroccanPayroll(emp, period, vars);
+    return [
+      emp.matricule, emp.name, emp.cnss, emp.service, emp.site, period,
+      c.baseSalary, c.seniorityBonus, c.ot25Amount + c.ot50Amount, c.taxableBonus,
+      c.absenceDeduction, c.grossTaxable, c.transportExempt, c.cnssEmployee,
+      c.amoEmployee, c.profExpenses, c.netTaxable, c.irNet, c.advance, c.netPayable
+    ];
+  });
+  downloadCSV(
+    `atlas-rh-journal-paie-${period}.csv`,
+    ['Matricule', 'Collaborateur', 'N° CNSS', 'Service', 'Site', 'Période', 'Salaire Base', 'Ancienneté', 'Heures Sup', 'Primes', 'Retenue Absences', 'Brut Imposable', 'Indemnité Transport', 'CNSS Salarié', 'AMO Salarié', 'Frais Pro', 'Net Imposable', 'IR Retenu', 'Avance', 'Net à Payer (MAD)'],
+    rows
+  );
+}
+
+function openMoroccanTaxRulesModal() {
+  openModal(
+    'Paramètres légaux de la paie — Maroc',
+    `<div style="font-size:13px;line-height:1.65;color:var(--text);">
+      <p style="margin-bottom:12px;">Le moteur de calcul d'Atlas RH applique les règles sociales et fiscales marocaines en vigueur :</p>
+      <ul style="padding-left:18px;display:flex;flex-direction:column;gap:8px;">
+        <li><strong>Prime d'ancienneté (Art. 350 Code du Travail) :</strong> 5 % après 2 ans, 10 % après 5 ans, 15 % après 12 ans, 20 % après 20 ans, 25 % après 25 ans.</li>
+        <li><strong>Heures supplémentaires (Art. 201) :</strong> Base 191 h/mois, majoration de +25 % (jour) et +50 % (nuit / repos hebdomadaire).</li>
+        <li><strong>Cotisation CNSS salariale :</strong> 4,48 % (4,29 % prestations sociales + 0,19 % IPE) sur le salaire brut imposable plafonné à <strong>6 000 MAD/mois</strong>.</li>
+        <li><strong>Cotisation AMO salariale :</strong> 2,26 % sur la totalité du salaire brut imposable (sans plafond).</li>
+        <li><strong>Frais professionnels (CGI) :</strong> 35 % plafonnés à 2 500 MAD/mois (si SBI ≤ 6 500 MAD) ou 25 % plafonnés à 2 916,67 MAD/mois (si SBI > 6 500 MAD).</li>
+        <li><strong>Barème mensuel de l'IR :</strong> Exonération jusqu'à 3 333,33 MAD (40 000 MAD/an), puis tranches progressives de 10 %, 20 %, 30 %, 34 % et 37 %.</li>
+        <li><strong>Charges de famille :</strong> Déduction de 41,67 MAD/mois (500 MAD/an) par personne à charge dans la limite de 6 personnes (250 MAD/mois max).</li>
+      </ul>
+    </div>`,
+    `<button class="btn btn-primary" onclick="closeModal()">Compris</button>`
+  );
+}
+
+/* ============================================================================
    7. HR MANAGER VIEWS (DASHBOARD, REQUESTS, ABSENCES, TRAININGS, EMPLOYEES, INDICATORS)
 ============================================================================ */
 function viewHrDashboard() {
@@ -2157,7 +2865,7 @@ function viewHrDashboard() {
   const dateLabel = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
 
   return `
-  <section class="hr-command-hero"><div class="hr-hero-main"><div class="hero-eyebrow"><span class="live-dot"></span> CENTRE DE PILOTAGE RH <span class="hero-sep">/</span> ATLAS SERVICES</div><h1>Bonjour, ${esc((getCurrentUser().name || 'Gestionnaire').split(' ')[0])}.</h1><p>Voici la situation RH de vos deux sites. Les priorités du jour sont regroupées ici pour vous aider à agir rapidement.</p><div class="hr-hero-actions"><a href="#/hr/requests" class="btn btn-light"><i data-lucide="list-checks"></i> Traiter les demandes <span class="hero-action-count">${pending.length}</span></a><a href="#/hr/absences" class="hero-text-link">Ouvrir le planning <i data-lucide="arrow-up-right"></i></a></div></div><div class="hr-hero-aside"><div class="hr-hero-date">${dateLabel}</div><div class="hr-hero-metric"><span>Demandes à traiter</span><strong>${pending.length}</strong><small>${latePending.length} hors délai cible de 48 h</small></div><div class="hr-hero-sites"><span><i data-lucide="map-pin"></i> Casablanca</span><span><i data-lucide="map-pin"></i> Rabat</span></div></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div></section>
+  <section class="hr-command-hero"><div class="hr-hero-main"><div class="hero-eyebrow"><span class="live-dot"></span> CENTRE DE PILOTAGE RH <span class="hero-sep">/</span> ATLAS SERVICES</div><h1>Bonjour, ${esc((getCurrentUser().name || 'Gestionnaire').split(' ')[0])}.</h1><p>Voici la situation RH de vos deux sites. Les priorités du jour et la préparation de la paie sont regroupées ici.</p><div class="hr-hero-actions"><a href="#/hr/requests" class="btn btn-light"><i data-lucide="list-checks"></i> Traiter les demandes <span class="hero-action-count">${pending.length}</span></a><a href="#/hr/payroll" class="hero-text-link">Préparer la paie <i data-lucide="arrow-up-right"></i></a></div></div><div class="hr-hero-aside"><div class="hr-hero-date">${dateLabel}</div><div class="hr-hero-metric"><span>Demandes à traiter</span><strong>${pending.length}</strong><small>${latePending.length} hors délai cible de 48 h</small></div><div class="hr-hero-sites"><span><i data-lucide="map-pin"></i> Casablanca</span><span><i data-lucide="map-pin"></i> Rabat</span></div></div><div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div></section>
 
   ${latePending.length ? `<div class="priority-alert"><div class="priority-alert-icon"><i data-lucide="alarm-clock"></i></div><div><strong>${latePending.length} demande(s) nécessitent votre attention</strong><p>Le délai cible de traitement de 48 heures est dépassé pour certaines demandes.</p></div><a href="#/hr/requests" class="btn btn-danger btn-sm">Voir les demandes</a></div>` : `<div class="priority-ok"><i data-lucide="shield-check"></i><span><strong>Tout est sous contrôle.</strong> Aucune demande en attente ne dépasse actuellement le délai cible de 48 heures.</span></div>`}
 
@@ -2201,26 +2909,23 @@ function renderHrTeamCalendar() {
     const iso = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     const dow = new Date(iso + 'T12:00:00').getDay();
     const isWknd = dow === 0 || dow === 6;
-    const away = isWknd ? [] : [
-      ...validLeaves.filter(l => iso >= l.start && iso <= l.end).map(l => getEmpName(l.empId).split(' ')[0]),
-      ...db.absences.filter(a => iso >= a.start && iso <= a.end).map(a => getEmpName(a.empId).split(' ')[0] + ' (Abs)')
-    ];
+    const dayLeaves = validLeaves.filter(l => iso >= l.start && iso <= l.end);
     cells += `
       <div class="cal-cell ${isWknd ? 'wknd' : ''} ${iso === todayStr ? 'today' : ''}">
-        <div style="font-weight:700;">${d}</div>
-        ${away.slice(0, 2).map(name => `<span class="cal-tag">${esc(name)}</span>`).join('')}
-        ${away.length > 2 ? `<span style="font-size:10px;color:var(--accent);font-weight:700;">+${away.length - 2} autres</span>` : ''}
+        <div style="font-weight:700;margin-bottom:2px;">${d}</div>
+        ${dayLeaves.slice(0, 2).map(l => `<span class="cal-tag">${esc(getEmpName(l.empId).split(' ')[0])}</span>`).join('')}
+        ${dayLeaves.length > 2 ? `<span style="font-size:10px;color:var(--accent);font-weight:700;">+${dayLeaves.length - 2} autres</span>` : ''}
       </div>`;
   }
 
   return `
   <div class="card">
     <div class="card-title">
-      <span>Planning mensuel des absences (Casablanca & Rabat)</span>
+      <span>Calendrier d'équipe (Congés validés)</span>
       <div style="display:flex;align-items:center;gap:8px;">
-        <button class="btn btn-outline btn-sm" onclick="uiState.calOffset--;render();">◀ Précédent</button>
-        <strong style="text-transform:capitalize;min-width:130px;text-align:center;">${monthLabel}</strong>
-        <button class="btn btn-outline btn-sm" onclick="uiState.calOffset++;render();">Suivant ▶</button>
+        <button class="btn btn-outline btn-sm" onclick="uiState.calOffset--;render();">◀</button>
+        <span style="font-weight:700;text-transform:capitalize;min-width:130px;text-align:center;">${monthLabel}</span>
+        <button class="btn btn-outline btn-sm" onclick="uiState.calOffset++;render();">▶</button>
       </div>
     </div>
     <div class="cal-grid">
@@ -2239,55 +2944,55 @@ function viewHrRequests() {
   }
   const pg = paginate(list, uiState.hrReqPage, 8);
   const selected = db.leaves.find(l => l.id === uiState.selectedHrLeaveId) || pg.slice[0] || null;
-  if (selected && !uiState.selectedHrLeaveId) uiState.selectedHrLeaveId = selected.id;
-
-  const selEmp = selected ? db.employees.find(e => e.id === selected.empId) : null;
-  const selBal = selEmp ? getLeaveBalance(selEmp.id) : null;
   const conflicts = selected ? getTeamConflicts(selected) : [];
 
   return `
   <div class="page-header">
     <div>
-      <h1 class="page-title">Demandes de congés à valider</h1>
-      <p class="page-sub">Arbitrez les demandes avec contrôle automatique des soldes et alertes de chevauchement d'équipe.</p>
+      <h1 class="page-title">Validation des demandes de congés</h1>
+      <p class="page-sub">Alertes de délai >48h, détection de chevauchements d'équipe et traçabilité des décisions.</p>
     </div>
-    <button class="btn btn-outline no-print" onclick="exportLeavesCSV()"><i data-lucide="download"></i> Exporter les demandes</button>
+    <button class="btn btn-outline" onclick="exportLeavesCSV()"><i data-lucide="download"></i> Exporter CSV</button>
   </div>
 
-  <div class="grid-2" style="grid-template-columns:1.35fr 1fr;align-items:start;">
+  <div class="grid-3" style="grid-template-columns:minmax(0,1.65fr) minmax(300px,1fr);align-items:start;">
     <div class="card">
       <div class="table-toolbar">
         <div style="display:flex;flex-wrap:wrap;gap:6px;">
-          ${['En attente', 'ALL', 'Validée', 'Refusée'].map(st => `
+          ${['En attente', 'ALL', 'Validée', 'Refusée', 'Annulée'].map(st => `
             <button class="btn btn-sm ${uiState.hrReqFilter === st ? 'btn-primary' : 'btn-outline'}"
-                    onclick="uiState.hrReqFilter='${st}';uiState.hrReqPage=1;uiState.selectedHrLeaveId=null;render();">
+                    onclick="uiState.hrReqFilter='${st}';uiState.hrReqPage=1;render();">
               ${st === 'ALL' ? 'Toutes' : st}
             </button>`).join('')}
         </div>
-        <input type="search" class="form-control" style="max-width:210px;" placeholder="Rechercher salarié..."
+        <input type="search" class="form-control" style="max-width:220px;" placeholder="Rechercher salarié..."
                value="${esc(uiState.hrReqSearch)}" oninput="uiState.hrReqSearch=this.value;uiState.hrReqPage=1;render();">
       </div>
 
       ${pg.total === 0 ? `<div style="padding:32px;text-align:center;color:var(--muted);">Aucune demande dans cette catégorie.</div>` : `
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Salarié</th><th>Type / Dates</th><th>Durée</th><th>Statut</th></tr></thead>
+          <thead><tr><th>Collaborateur</th><th>Type & Période</th><th>Jours</th><th>Délai</th><th>Statut</th></tr></thead>
           <tbody>
             ${pg.slice.map(l => {
               const late = isPendingOver48h(l);
+              const hrs = l.createdAt ? hoursBetween(l.createdAt, l.decidedAt || new Date().toISOString()) : 0;
               const isSel = selected && selected.id === l.id;
               return `
               <tr class="${late ? 'row-late' : ''} ${isSel ? 'row-selected' : ''}" style="cursor:pointer;"
                   onclick="uiState.selectedHrLeaveId='${l.id}';render();">
                 <td>
-                  <div style="font-weight:600;">${esc(getEmpName(l.empId))}</div>
-                  ${late ? `<span class="badge badge-red" style="font-size:10.5px;">> 48h en attente</span>` : ''}
+                  <div style="font-weight:700;">${esc(getEmpName(l.empId))}</div>
+                  <div style="font-size:12px;color:var(--muted);">${esc(db.employees.find(e=>e.id===l.empId)?.team || '')}</div>
                 </td>
                 <td>
-                  <div style="text-transform:capitalize;font-weight:500;">${esc(l.type)}</div>
+                  <div style="text-transform:capitalize;font-weight:600;">${esc(l.type)}</div>
                   <div style="font-size:12px;color:var(--muted);">${fmtDate(l.start)} → ${fmtDate(l.end)}</div>
                 </td>
                 <td><strong>${l.days} j</strong></td>
+                <td>
+                  ${late ? `<span class="badge badge-red">⚠ ${hrs}h (>48h)</span>` : `<span style="font-size:12px;color:var(--muted);">${hrs}h</span>`}
+                </td>
                 <td>${statusBadge(l.status)}</td>
               </tr>`;
             }).join('')}
@@ -2304,85 +3009,93 @@ function viewHrRequests() {
     </div>
 
     <div class="card">
-      <div class="card-title"><span>Détail & décision RH</span><i data-lucide="file-check" style="color:var(--primary);"></i></div>
-      ${!selected || !selEmp ? `<p style="color:var(--muted);">Sélectionnez une demande dans la liste.</p>` : `
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <div class="card-title"><span>Détail & décision RH</span></div>
+      ${!selected ? `<p style="color:var(--muted);">Sélectionnez une demande dans le tableau.</p>` : (() => {
+        const emp = db.employees.find(e => e.id === selected.empId);
+        const bal = emp ? getLeaveBalance(emp.id) : { remaining: 0 };
+        return `
+        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px;">
           <div>
-            <h3 style="font-size:17px;">${esc(selEmp.name)}</h3>
-            <div style="font-size:12.5px;color:var(--muted);">${esc(selEmp.service)} • ${esc(selEmp.team)} (${esc(selEmp.site)})</div>
+            <h3 style="font-size:17px;">${esc(emp?.name || '')}</h3>
+            <div style="font-size:12.5px;color:var(--muted);">${esc(emp?.service || '')} • ${esc(emp?.team || '')} (${esc(emp?.site || '')})</div>
           </div>
           ${statusBadge(selected.status)}
         </div>
-
-        ${conflicts.length >= 2 ? `
-        <div style="background:var(--gold-light);border:1px solid #F3CE7B;color:#7A4E00;padding:10px 12px;border-radius:8px;margin-bottom:12px;font-size:12.5px;">
-          <strong>Alerte effectif équipe (${esc(selEmp.team)}) :</strong> ${conflicts.length + 1} personnes seraient absentes sur ces dates (${conflicts.map(c => esc(getEmpName(c.empId))).join(', ')}).
-        </div>` : ''}
-
-        <div class="request-flow ${selected.status === 'Validée' ? 'flow-approved' : selected.status === 'Refusée' ? 'flow-rejected' : ''}">
-          <div class="request-flow-node is-done"><span><i data-lucide="file-text"></i></span><b>Déposée</b><small>${fmtDate(selected.createdAt)}</small></div>
+        <div class="request-flow" aria-label="Suivi de la demande">
+          <div class="request-flow-node is-done"><span><i data-lucide="file-plus-2"></i></span><b>Demande</b><small>${fmtDate(selected.createdAt)}</small></div>
           <div class="request-flow-connector"></div>
-          <div class="request-flow-node ${selected.status === 'En attente' ? 'is-current' : 'is-done'}"><span><i data-lucide="user-check"></i></span><b>Décision RH</b><small>${selected.status === 'En attente' ? 'À traiter' : selected.status}</small></div>
+          <div class="request-flow-node ${selected.status==='En attente'?'is-current':'is-done'}"><span><i data-lucide="user-check"></i></span><b>Examen RH</b><small>${selected.status==='En attente'?'En cours':'Effectué'}</small></div>
           <div class="request-flow-connector"></div>
-          <div class="request-flow-node ${selected.status === 'En attente' ? '' : 'is-done'}"><span><i data-lucide="bell-ring"></i></span><b>Notification</b><small>${selected.status === 'En attente' ? 'Après décision' : 'Salarié informé'}</small></div>
+          <div class="request-flow-node ${selected.status==='En attente'?'':'is-done'}"><span><i data-lucide="${selected.status==='Refusée'?'x-circle':'badge-check'}"></i></span><b>${selected.status==='Refusée'?'Refus':'Réponse'}</b><small>${selected.decidedAt?fmtDate(selected.decidedAt):'À rendre'}</small></div>
         </div>
         <div class="request-facts-grid">
           <div><small>TYPE</small><b>${esc(selected.type)}</b></div>
-          <div><small>DURÉE</small><b>${selected.days} jours</b></div>
-          <div><small>SOLDE RESTANT</small><b>${selBal.remaining} j</b></div>
-          <div><small>SITE</small><b>${esc(selEmp.site)}</b></div>
+          <div><small>DURÉE</small><b>${selected.days} j</b></div>
+          <div><small>PÉRIODE</small><b>${fmtDate(selected.start)} → ${fmtDate(selected.end)}</b></div>
+          <div><small>SOLDE RESTANT</small><b>${bal.remaining} j</b></div>
         </div>
-        <div class="request-reason"><small>MOTIF DE LA DEMANDE</small><p>${esc(selected.reason)}</p><span>${fmtDate(selected.start)} → ${fmtDate(selected.end)}</span></div>
+        <div class="request-reason"><small>MOTIF</small><p>${esc(selected.reason)}</p>${selected.attachment?`<span><i data-lucide="paperclip"></i> ${esc(selected.attachment)}</span>`:''}</div>
+
+        ${conflicts.length > 0 ? `
+        <div style="background:var(--gold-light);border:1px solid #F3CE7D;color:#7A4E00;padding:10px 12px;border-radius:9px;margin-bottom:14px;font-size:12.5px;">
+          <strong>⚠ Conflit d'équipe (${esc(emp?.team || '')}) :</strong>
+          ${conflicts.map(c => `${esc(getEmpName(c.empId))} est déjà en congé (${fmtDate(c.start)} → ${fmtDate(c.end)})`).join(' ; ')}
+        </div>` : ''}
 
         ${selected.status === 'En attente' ? `
-          <div class="form-group">
-            <label class="form-label" for="hr-refusal-reason">Motif de refus (obligatoire uniquement en cas de refus)</label>
-            <textarea id="hr-refusal-reason" class="form-control" rows="2" placeholder="Ex. Continuité de service requise sur le site..."></textarea>
-          </div>
-          <div style="display:flex;gap:10px;">
-            <button class="btn btn-success" style="flex:1;" onclick="decideLeave('${selected.id}', 'Validée')"><i data-lucide="check"></i> Valider</button>
-            <button class="btn btn-danger" style="flex:1;" onclick="decideLeave('${selected.id}', 'Refusée')"><i data-lucide="x"></i> Refuser</button>
-          </div>` : `
-          <div style="font-size:13px;color:var(--muted);">
-            Décision enregistrée par <strong>${esc(selected.decidedBy || 'RH')}</strong> le ${fmtDate(selected.decidedAt)}.
-            ${selected.refusal ? `<div style="color:var(--danger);margin-top:6px;"><strong>Motif du refus :</strong> ${esc(selected.refusal)}</div>` : ''}
-          </div>`}
-      `}
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-success" style="flex:1;" onclick="decideLeave('${selected.id}', 'Validée')"><i data-lucide="check"></i> Valider</button>
+          <button class="btn btn-danger" style="flex:1;" onclick="openRefusalModal('${selected.id}')"><i data-lucide="x"></i> Refuser</button>
+        </div>` : `
+        <div style="font-size:12.5px;color:var(--muted);">
+          Décision enregistrée le ${fmtDate(selected.decidedAt)} par <strong>${esc(selected.decidedBy || 'RH')}</strong>.
+          ${selected.refusal ? `<div style="color:var(--danger);margin-top:4px;">Motif : ${esc(selected.refusal)}</div>` : ''}
+        </div>`}`;
+      })()}
     </div>
   </div>`;
 }
 
-function decideLeave(leaveId, decision) {
+function openRefusalModal(leaveId) {
+  openModal(
+    'Refuser la demande de congé',
+    `<div class="form-group">
+      <label class="form-label" for="refusal-reason">Motif obligatoire du refus *</label>
+      <textarea id="refusal-reason" class="form-control" rows="3" placeholder="Ex. Effectif minimum requis sur le site de Casablanca à ces dates..."></textarea>
+    </div>`,
+    `<button class="btn btn-outline" onclick="closeModal()">Annuler</button>
+     <button class="btn btn-danger" onclick="confirmRefusal('${leaveId}')">Confirmer le refus</button>`
+  );
+}
+
+function confirmRefusal(leaveId) {
+  const txt = document.getElementById('refusal-reason')?.value.trim();
+  if (!txt) {
+    toast('Veuillez saisir un motif de refus.', 'error');
+    return;
+  }
+  closeModal();
+  decideLeave(leaveId, 'Refusée', txt);
+}
+
+function decideLeave(leaveId, decision, refusalReason = null) {
   const lv = db.leaves.find(l => l.id === leaveId);
   if (!lv || lv.status !== 'En attente') return;
-  const rhUser = getCurrentUser();
-  let refusalText = null;
-  if (decision === 'Refusée') {
-    const box = document.getElementById('hr-refusal-reason');
-    refusalText = box ? box.value.trim() : '';
-    if (!refusalText) {
-      toast('Le motif de refus est obligatoire pour informer le salarié.', 'error');
-      if (box) box.focus();
-      return;
-    }
-  }
+  const hrUser = getCurrentUser();
   lv.status = decision;
   lv.decidedAt = new Date().toISOString();
-  lv.decidedBy = rhUser.name;
-  lv.refusal = refusalText;
-
+  lv.decidedBy = hrUser.name;
+  lv.refusal = refusalReason;
   db.notifications.push({
     id: 'nt_' + Date.now(),
     to: lv.empId,
-    text: decision === 'Validée'
-      ? `Bonne nouvelle : votre congé ${lv.type} (${fmtDate(lv.start)} → ${fmtDate(lv.end)}) a été validé par ${rhUser.name}.`
-      : `Votre congé ${lv.type} (${fmtDate(lv.start)} → ${fmtDate(lv.end)}) a été refusé. Motif : ${refusalText}`,
+    text: `Votre demande de congé (${lv.type}, ${fmtDate(lv.start)} → ${fmtDate(lv.end)}) a été ${decision.toLowerCase()} par ${hrUser.name}.`,
     ts: new Date().toISOString(),
     read: false
   });
   saveDb();
-  recordEvent(rhUser.id, decision === 'Validée' ? 'approve_leave' : 'refuse_leave');
-  toast(`Demande ${decision.toLowerCase()} avec succès.`, decision === 'Validée' ? 'success' : 'warning');
+  recordEvent(hrUser.id, decision === 'Validée' ? 'approve_leave' : 'reject_leave');
+  toast(`Demande ${decision.toLowerCase()} et salarié notifié.`, decision === 'Validée' ? 'success' : 'warning');
   render();
 }
 
@@ -2398,21 +3111,21 @@ function viewHrAbsences() {
   return `
   <div class="page-header">
     <div>
-      <h1 class="page-title">Suivi des absences</h1>
-      <p class="page-sub">Enregistrement centralisé et export CSV compatible Excel.</p>
+      <h1 class="page-title">Suivi centralisé des absences</h1>
+      <p class="page-sub">Enregistrement des maladies, absences autorisées, retards terrain et accidents de trajet.</p>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+    <div style="display:flex;gap:8px;">
       <button class="btn btn-outline" onclick="exportAbsencesCSV()"><i data-lucide="download"></i> Exporter CSV</button>
-      <button class="btn btn-primary" onclick="openNewAbsenceModal()"><i data-lucide="plus"></i> Saisir une absence</button>
+      <button class="btn btn-primary" onclick="openAddAbsenceModal()"><i data-lucide="plus"></i> Déclarer une absence</button>
     </div>
   </div>
 
   <div class="card">
     <div class="table-toolbar">
-      <select class="form-control" style="max-width:230px;" onchange="uiState.absTypeFilter=this.value;uiState.absPage=1;render();">
+      <select class="form-control" style="max-width:240px;" onchange="uiState.absTypeFilter=this.value;uiState.absPage=1;render();">
         <option value="ALL">Tous les types d'absence</option>
-        ${['Maladie justifiée', 'Absence autorisée', 'Retard terrain', 'Accident de trajet', 'Absence non justifiée'].map(t =>
-          `<option value="${t}" ${uiState.absTypeFilter === t ? 'selected' : ''}>${t}</option>`).join('')}
+        ${['Maladie justifiée', 'Absence autorisée', 'Retard terrain', 'Accident de trajet', 'Absence non justifiée']
+          .map(t => `<option value="${t}" ${uiState.absTypeFilter === t ? 'selected' : ''}>${t}</option>`).join('')}
       </select>
       <input type="search" class="form-control" style="max-width:250px;" placeholder="Rechercher salarié ou note..."
              value="${esc(uiState.absSearch)}" oninput="uiState.absSearch=this.value;uiState.absPage=1;render();">
@@ -2420,15 +3133,15 @@ function viewHrAbsences() {
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Salarié</th><th>Site</th><th>Type</th><th>Période</th><th>Note / Justificatif</th></tr></thead>
+        <thead><tr><th>Collaborateur</th><th>Site</th><th>Type</th><th>Période</th><th>Observation</th></tr></thead>
         <tbody>
           ${pg.slice.map(a => {
             const emp = db.employees.find(e => e.id === a.empId);
             return `
             <tr>
-              <td><strong>${esc(getEmpName(a.empId))}</strong></td>
-              <td>${esc(emp?.site || '—')}</td>
-              <td><span class="badge badge-primary">${esc(a.type)}</span></td>
+              <td><strong>${esc(emp?.name || '')}</strong><div style="font-size:12px;color:var(--muted);">${esc(emp?.service || '')}</div></td>
+              <td>${esc(emp?.site || '')}</td>
+              <td><span class="badge ${a.type === 'Absence non justifiée' ? 'badge-red' : 'badge-primary'}">${esc(a.type)}</span></td>
               <td>${fmtDate(a.start)} → ${fmtDate(a.end)}</td>
               <td>${esc(a.note || '—')}</td>
             </tr>`;
@@ -2446,14 +3159,14 @@ function viewHrAbsences() {
   </div>`;
 }
 
-function openNewAbsenceModal() {
+function openAddAbsenceModal() {
   openModal(
-    'Enregistrer une absence',
-    `<form id="abs-form" onsubmit="saveNewAbsence(event)">
+    'Déclarer une absence collaborateur',
+    `<form id="abs-form">
       <div class="form-group">
         <label class="form-label">Collaborateur *</label>
         <select id="abs-emp" class="form-control">
-          ${db.employees.map(e => `<option value="${e.id}">${esc(e.name)} (${esc(e.site)})</option>`).join('')}
+          ${db.employees.map(e => `<option value="${e.id}">${esc(e.name)} (${esc(e.service)} - ${esc(e.site)})</option>`).join('')}
         </select>
       </div>
       <div class="form-group">
@@ -2467,193 +3180,149 @@ function openNewAbsenceModal() {
         </select>
       </div>
       <div class="grid-2" style="gap:12px;">
-        <div class="form-group">
-          <label class="form-label">Date début *</label>
-          <input type="date" id="abs-start" class="form-control" value="${isoDate(0)}" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Date fin *</label>
-          <input type="date" id="abs-end" class="form-control" value="${isoDate(0)}" required>
-        </div>
+        <div class="form-group"><label class="form-label">Date début *</label><input type="date" id="abs-start" class="form-control" value="${isoDate(0)}"></div>
+        <div class="form-group"><label class="form-label">Date fin *</label><input type="date" id="abs-end" class="form-control" value="${isoDate(0)}"></div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Commentaire / justificatif</label>
-        <input type="text" id="abs-note" class="form-control" placeholder="Ex. Certificat médical reçu...">
-      </div>
+      <div class="form-group"><label class="form-label">Observation / justificatif</label><input type="text" id="abs-note" class="form-control" placeholder="Ex. Certificat médical reçu"></div>
     </form>`,
     `<button class="btn btn-outline" onclick="closeModal()">Annuler</button>
-     <button class="btn btn-primary" onclick="document.getElementById('abs-form').requestSubmit()">Enregistrer</button>`
+     <button class="btn btn-primary" onclick="saveNewAbsence()">Enregistrer</button>`
   );
 }
 
-function saveNewAbsence(e) {
-  e.preventDefault();
+function saveNewAbsence() {
   const empId = document.getElementById('abs-emp').value;
   const type = document.getElementById('abs-type').value;
   const start = document.getElementById('abs-start').value;
   const end = document.getElementById('abs-end').value;
   const note = document.getElementById('abs-note').value.trim();
-  if (!empId || !start || !end) { toast('Veuillez renseigner le collaborateur et les deux dates.', 'error'); return; }
-  if (end < start) { toast('La date de fin doit être >= date de début.', 'error'); return; }
+  if (!start || !end || new Date(end) < new Date(start)) {
+    toast('Dates d’absence invalides.', 'error');
+    return;
+  }
   db.absences.push({ id: 'abs_' + Date.now(), empId, type, start, end, note });
-  saveDb();
-  recordEvent(getCurrentUser().id, 'record_absence');
-  closeModal();
-  toast('Absence enregistrée dans le dossier RH.');
-  render();
-}
-
-function exportAbsencesCSV() {
-  const rows = [['ID', 'Salarié', 'Service', 'Site', 'Type', 'Début', 'Fin', 'Note']];
-  db.absences.forEach(a => {
-    const emp = db.employees.find(e => e.id === a.empId);
-    rows.push([a.id, emp?.name || '', emp?.service || '', emp?.site || '', a.type, fmtDate(a.start), fmtDate(a.end), a.note || '']);
+  db.notifications.push({
+    id: 'nt_' + Date.now(),
+    to: empId,
+    text: `Une absence (${type}) du ${fmtDate(start)} au ${fmtDate(end)} a été enregistrée sur votre dossier.`,
+    ts: new Date().toISOString(),
+    read: false
   });
-  const csv = '\uFEFF' + rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(';')).join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `atlas_rh_absences_${isoDate(0)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Export CSV téléchargé.');
+  saveDb();
+  recordEvent(getCurrentUser().id, 'create_absence');
+  closeModal();
+  toast('Absence enregistrée dans le dossier collaborateur.');
+  render();
 }
 
 function viewHrTrainings() {
   const kpis = computeKPIs();
   const selTr = db.trainings.find(t => t.id === uiState.selectedTrainingId) || db.trainings[0];
-  if (selTr && !uiState.selectedTrainingId) uiState.selectedTrainingId = selTr.id;
-  const participants = selTr ? db.enrollments.filter(e => e.trainingId === selTr.id) : [];
+  const selEnrolls = selTr ? db.enrollments.filter(e => e.trainingId === selTr.id) : [];
 
   return `
   <div class="page-header">
     <div>
-      <h1 class="page-title">Plan de formation & émargement</h1>
-      <p class="page-sub">Taux de participation global (sessions passées) : <strong>${kpis.kpi2}%</strong> (objectif 90%).</p>
+      <h1 class="page-title">Gestion des formations & émargement</h1>
+      <p class="page-sub">Planification des sessions et pointage numérique de présence (KPI #2 : ${kpis.kpi2}% de présence).</p>
     </div>
-    <button class="btn btn-primary" onclick="openTrainingModal()"><i data-lucide="plus"></i> Créer une formation</button>
+    <button class="btn btn-primary" onclick="openNewTrainingModal()"><i data-lucide="plus"></i> Nouvelle session</button>
   </div>
 
-  <div class="grid-2" style="grid-template-columns:1.25fr 1fr;align-items:start;">
+  <div class="grid-2" style="align-items:start;">
     <div class="card">
-      <div class="card-title"><span>Sessions programmées et passées</span></div>
+      <div class="card-title"><span>Sessions programmées (${db.trainings.length})</span></div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        ${db.trainings.map(t => {
+          const cnt = db.enrollments.filter(e => e.trainingId === t.id).length;
+          const active = selTr && selTr.id === t.id;
+          return `
+          <div style="padding:13px;border-radius:10px;border:1px solid ${active ? 'var(--primary)' : 'var(--border)'};background:${active ? 'var(--primary-light)' : '#fff'};cursor:pointer;"
+               onclick="uiState.selectedTrainingId='${t.id}';render();">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <strong>${esc(t.title)}</strong>
+              <span class="badge ${t.date < isoDate(0) ? 'badge-gray' : 'badge-green'}">${fmtDate(t.date)}</span>
+            </div>
+            <div style="font-size:12.5px;color:var(--muted);margin-top:4px;">${esc(t.place)} • ${cnt}/${t.capacity} inscrits</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">
+        <span>Feuille de présence : ${esc(selTr?.title || '')}</span>
+        <span class="badge badge-primary">${selEnrolls.length}/${selTr?.capacity || 0}</span>
+      </div>
+      ${selEnrolls.length === 0 ? `<p style="color:var(--muted);">Aucun inscrit sur cette session pour le moment.</p>` : `
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Formation</th><th>Date</th><th>Inscrits</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Participant</th><th>Service</th><th>Présence</th></tr></thead>
           <tbody>
-            ${db.trainings.map(t => {
-              const cnt = db.enrollments.filter(e => e.trainingId === t.id).length;
-              const isSel = selTr && selTr.id === t.id;
+            ${selEnrolls.map(en => {
+              const emp = db.employees.find(e => e.id === en.empId);
               return `
-              <tr class="${isSel ? 'row-selected' : ''}" style="cursor:pointer;" onclick="uiState.selectedTrainingId='${t.id}';render();">
+              <tr>
+                <td><strong>${esc(emp?.name || '')}</strong></td>
+                <td>${esc(emp?.service || '')}</td>
                 <td>
-                  <div style="font-weight:600;">${esc(t.title)}</div>
-                  <div style="font-size:12px;color:var(--muted);">${esc(t.place)} • ${esc(t.duration)}</div>
-                </td>
-                <td>${fmtDate(t.date)}</td>
-                <td><span class="badge badge-primary">${cnt}/${t.capacity}</span></td>
-                <td onclick="event.stopPropagation()">
-                  <div style="display:flex;gap:5px;">
-                    <button class="btn btn-outline btn-sm" onclick="openTrainingModal('${t.id}')" aria-label="Modifier"><i data-lucide="edit-2"></i></button>
-                    <button class="btn btn-outline btn-sm" style="color:var(--danger);" onclick="confirmDialog('Supprimer la formation','Supprimer cette session et ses inscriptions ?','deleteTraining(\\'${t.id}\\')')" aria-label="Supprimer"><i data-lucide="trash-2"></i></button>
+                  <div style="display:flex;gap:6px;">
+                    <button class="btn btn-sm ${en.present === true ? 'btn-success' : 'btn-outline'}"
+                            onclick="setAttendance('${selTr.id}','${en.empId}',true)">Présent</button>
+                    <button class="btn btn-sm ${en.present === false ? 'btn-danger' : 'btn-outline'}"
+                            onclick="setAttendance('${selTr.id}','${en.empId}',false)">Absent</button>
                   </div>
                 </td>
               </tr>`;
             }).join('')}
           </tbody>
         </table>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title"><span>Participants & émargement</span><i data-lucide="user-check" style="color:var(--primary);"></i></div>
-      ${!selTr ? `<p style="color:var(--muted);">Aucune formation sélectionnée.</p>` : `
-        <h3 style="font-size:16px;margin-bottom:4px;">${esc(selTr.title)}</h3>
-        <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;">${fmtDate(selTr.date)} • Formateur : ${esc(selTr.trainer)}</p>
-        ${participants.length === 0 ? `<p style="color:var(--muted);">Aucun collaborateur inscrit pour le moment.</p>` : `
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          ${participants.map(p => `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border:1px solid var(--border);border-radius:8px;">
-              <div>
-                <div style="font-weight:600;">${esc(getEmpName(p.empId))}</div>
-                <div style="font-size:11.5px;color:var(--muted);">${p.present === true ? 'Présent' : p.present === false ? 'Absent' : 'Non émargé'}</div>
-              </div>
-              <div style="display:flex;gap:6px;">
-                <button class="btn btn-sm ${p.present === true ? 'btn-success' : 'btn-outline'}" onclick="markAttendance('${selTr.id}','${p.empId}',true)">Présent</button>
-                <button class="btn btn-sm ${p.present === false ? 'btn-danger' : 'btn-outline'}" onclick="markAttendance('${selTr.id}','${p.empId}',false)">Absent</button>
-              </div>
-            </div>`).join('')}
-        </div>`}`}
+      </div>`}
     </div>
   </div>`;
 }
 
-function markAttendance(trainingId, empId, present) {
-  const enr = db.enrollments.find(e => e.trainingId === trainingId && e.empId === empId);
-  if (!enr) return;
-  enr.present = present;
+function setAttendance(trainingId, empId, isPresent) {
+  const en = db.enrollments.find(e => e.trainingId === trainingId && e.empId === empId);
+  if (!en) return;
+  en.present = isPresent;
   saveDb();
   recordEvent(getCurrentUser().id, 'mark_attendance');
-  toast(`Émargement mis à jour (${present ? 'Présent' : 'Absent'}).`);
+  toast(`Présence mise à jour pour ${getEmpName(empId)}.`);
   render();
 }
 
-function openTrainingModal(id = null) {
-  const tr = id ? db.trainings.find(t => t.id === id) : null;
+function openNewTrainingModal() {
   openModal(
-    tr ? 'Modifier la formation' : 'Nouvelle session de formation',
-    `<form id="tr-form" onsubmit="saveTraining(event, '${id || ''}')">
-      <div class="form-group"><label class="form-label">Intitulé *</label><input id="tr-title" class="form-control" required value="${esc(tr?.title || '')}"></div>
-      <div class="grid-2" style="gap:12px;">
-        <div class="form-group"><label class="form-label">Date *</label><input type="date" id="tr-date" class="form-control" required value="${esc(tr?.date || isoDate(10))}"></div>
-        <div class="form-group"><label class="form-label">Durée *</label><input id="tr-dur" class="form-control" required value="${esc(tr?.duration || '3h30')}"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Lieu *</label><input id="tr-place" class="form-control" required value="${esc(tr?.place || 'Salle Atlas — Casablanca')}"></div>
-      <div class="grid-2" style="gap:12px;">
-        <div class="form-group"><label class="form-label">Formateur *</label><input id="tr-trainer" class="form-control" required value="${esc(tr?.trainer || 'Salma El Idrissi')}"></div>
-        <div class="form-group"><label class="form-label">Capacité *</label><input type="number" id="tr-cap" class="form-control" min="2" max="90" required value="${tr?.capacity || 20}"></div>
-      </div>
-      <div class="form-group"><label class="form-label">Public cible</label><input id="tr-aud" class="form-control" value="${esc(tr?.audience || 'Tous les collaborateurs')}"></div>
-    </form>`,
+    'Planifier une session de formation',
+    `<div class="form-group"><label class="form-label">Intitulé de la formation *</label><input id="tr-title" class="form-control" placeholder="Ex. Gestion des conflits sur site"></div>
+     <div class="grid-2" style="gap:12px;">
+       <div class="form-group"><label class="form-label">Date *</label><input type="date" id="tr-date" class="form-control" value="${isoDate(12)}"></div>
+       <div class="form-group"><label class="form-label">Durée *</label><input id="tr-dur" class="form-control" value="4h"></div>
+     </div>
+     <div class="grid-2" style="gap:12px;">
+       <div class="form-group"><label class="form-label">Lieu *</label><input id="tr-place" class="form-control" value="Salle Atlas — Casablanca"></div>
+       <div class="form-group"><label class="form-label">Capacité *</label><input type="number" id="tr-cap" class="form-control" value="18"></div>
+     </div>
+     <div class="form-group"><label class="form-label">Formateur / organisme</label><input id="tr-trainer" class="form-control" value="Salma El Idrissi"></div>`,
     `<button class="btn btn-outline" onclick="closeModal()">Annuler</button>
-     <button class="btn btn-primary" onclick="document.getElementById('tr-form').requestSubmit()">Enregistrer</button>`
+     <button class="btn btn-primary" onclick="saveNewTraining()">Publier la session</button>`
   );
 }
 
-function saveTraining(e, id) {
-  e.preventDefault();
-  const payload = {
-    title: document.getElementById('tr-title').value.trim(),
-    date: document.getElementById('tr-date').value,
-    duration: document.getElementById('tr-dur').value.trim(),
-    place: document.getElementById('tr-place').value.trim(),
-    trainer: document.getElementById('tr-trainer').value.trim(),
-    capacity: Number(document.getElementById('tr-cap').value) || 15,
-    audience: document.getElementById('tr-aud').value.trim()
-  };
-  if (id) {
-    const tr = db.trainings.find(t => t.id === id);
-    if (tr) Object.assign(tr, payload);
-  } else {
-    const newId = 'tr_' + Date.now();
-    db.trainings.push({ id: newId, ...payload });
-    uiState.selectedTrainingId = newId;
-  }
+function saveNewTraining() {
+  const title = document.getElementById('tr-title').value.trim();
+  const date = document.getElementById('tr-date').value;
+  const duration = document.getElementById('tr-dur').value.trim() || '3h';
+  const place = document.getElementById('tr-place').value.trim() || 'Casablanca';
+  const capacity = Math.max(2, Number(document.getElementById('tr-cap').value) || 15);
+  const trainer = document.getElementById('tr-trainer').value.trim() || 'Équipe RH';
+  if (!title || !date) { toast('Titre et date obligatoires.', 'error'); return; }
+  db.trainings.push({ id: 'tr_' + Date.now(), title, date, duration, place, trainer, capacity, audience: 'Tous services' });
   saveDb();
-  recordEvent(getCurrentUser().id, id ? 'edit_training' : 'create_training');
+  recordEvent(getCurrentUser().id, 'create_training');
   closeModal();
-  toast(id ? 'Formation modifiée.' : 'Formation créée.');
-  render();
-}
-
-function deleteTraining(id) {
-  db.trainings = db.trainings.filter(t => t.id !== id);
-  db.enrollments = db.enrollments.filter(e => e.trainingId !== id);
-  if (uiState.selectedTrainingId === id) uiState.selectedTrainingId = null;
-  saveDb();
-  recordEvent(getCurrentUser().id, 'delete_training');
-  toast('Formation supprimée.', 'warning');
+  toast('Nouvelle session de formation publiée au catalogue !');
   render();
 }
 
@@ -2669,10 +3338,9 @@ function viewHrEmployees() {
   return `
   <div class="page-header">
     <div>
-      <h1 class="page-title">Annuaire & dossiers collaborateurs</h1>
-      <p class="page-sub">Consultez le solde de congés, l'historique et les formations de chaque collaborateur.</p>
+      <h1 class="page-title">Annuaire des collaborateurs</h1>
+      <p class="page-sub">Échantillon représentatif de 14 profils sur les 90 salariés d'Atlas Services SARL (Casablanca & Rabat).</p>
     </div>
-    <button class="btn btn-outline no-print" onclick="exportEmployeesCSV()"><i data-lucide="download"></i> Exporter l'annuaire</button>
   </div>
 
   <div class="card">
@@ -2690,28 +3358,25 @@ function viewHrEmployees() {
 
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Collaborateur</th><th>Service / Équipe</th><th>Site</th><th>Solde restant</th><th>Dossier</th></tr></thead>
+        <thead><tr><th>Collaborateur</th><th>Service & Équipe</th><th>Site</th><th>Salaire base</th><th>Solde annuel</th><th>Dossier</th></tr></thead>
         <tbody>
           ${pg.slice.map(e => {
             const bal = getLeaveBalance(e.id);
-            const isAmb = db.ambassadors.some(a => a.empId === e.id);
             return `
-            <tr>
-              <td>
-                <strong>${esc(e.name)}</strong>
-                ${isAmb ? `<span class="badge badge-gold" style="margin-left:6px;">Ambassadeur</span>` : ''}
-              </td>
-              <td>${esc(e.service)} <span style="color:var(--muted);">• ${esc(e.team)}</span></td>
-              <td>${esc(e.site)}</td>
-              <td><span class="badge badge-primary">${bal.remaining} j / ${bal.total} j</span></td>
-              <td><button class="btn btn-outline btn-sm" onclick="openEmployeeDrawer('${e.id}')">Ouvrir la fiche</button></td>
+            <tr style="cursor:pointer;" onclick="openEmployeeDrawer('${e.id}')">
+              <td><strong>${esc(e.name)}</strong><div style="font-size:11px;color:var(--muted);">${esc(e.matricule)}</div></td>
+              <td><div>${esc(e.service)}</div><div style="font-size:12px;color:var(--muted);">${esc(e.team)}</div></td>
+              <td><span class="badge badge-primary">${esc(e.site)}</span></td>
+              <td><strong>${formatMAD(e.baseSalary)}</strong></td>
+              <td><strong>${bal.remaining} j</strong> / ${bal.total} j</td>
+              <td><button class="btn btn-outline btn-sm">Fiche</button></td>
             </tr>`;
           }).join('')}
         </tbody>
       </table>
     </div>
     <div class="pagination">
-      <span>${pg.total} collaborateur(s) affiché(s) (comptes de démonstration)</span>
+      <span>${pg.total} collaborateur(s) affiché(s)</span>
       <div style="display:flex;gap:6px;">
         <button class="btn btn-outline btn-sm" ${pg.page <= 1 ? 'disabled' : ''} onclick="uiState.empPage--;render();">Précédent</button>
         <button class="btn btn-outline btn-sm" ${pg.page >= pg.totalPages ? 'disabled' : ''} onclick="uiState.empPage++;render();">Suivant</button>
@@ -2725,286 +3390,324 @@ function openEmployeeDrawer(empId) {
   render();
 }
 
+function closeEmployeeDrawer() {
+  uiState.selectedEmpDrawer = null;
+  render();
+}
+
 function renderEmployeeDrawer(empId) {
   const emp = db.employees.find(e => e.id === empId);
   if (!emp) return '';
   const bal = getLeaveBalance(emp.id);
-  const empLeaves = db.leaves.filter(l => l.empId === emp.id).slice().reverse();
-  const empTr = db.enrollments.filter(e => e.empId === emp.id).map(e => ({
-    ...e,
-    tr: db.trainings.find(t => t.id === e.trainingId)
-  }));
-
+  const leaves = db.leaves.filter(l => l.empId === emp.id);
+  const abs = db.absences.filter(a => a.empId === emp.id);
+  const trs = db.enrollments.filter(en => en.empId === emp.id);
+  const slips = db.payrollRuns.filter(p => p.empId === emp.id);
   return `
-  <div class="drawer-backdrop" onclick="if(event.target===this){uiState.selectedEmpDrawer=null;render();}">
-    <aside class="drawer-panel" role="dialog" aria-label="Fiche collaborateur">
+  <div class="drawer-backdrop" onclick="if(event.target===this)closeEmployeeDrawer()">
+    <aside class="drawer-panel" aria-label="Fiche collaborateur">
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div>
-          <h2 style="font-size:20px;">${esc(emp.name)}</h2>
-          <p style="color:var(--muted);font-size:13px;">${esc(emp.service)} • ${esc(emp.team)} (${esc(emp.site)})</p>
+          <h2>${esc(emp.name)}</h2>
+          <div style="color:var(--muted);font-size:13px;">${esc(emp.matricule)} • ${esc(emp.service)} • ${esc(emp.team)} (${esc(emp.site)})</div>
         </div>
-        <button class="icon-btn" onclick="uiState.selectedEmpDrawer=null;render();" aria-label="Fermer"><i data-lucide="x"></i></button>
+        <button class="icon-btn" onclick="closeEmployeeDrawer()" aria-label="Fermer la fiche"><i data-lucide="x"></i></button>
       </div>
-
       <div class="grid-3" style="gap:10px;">
-        <div style="background:var(--primary-light);padding:12px;border-radius:9px;text-align:center;">
-          <div style="font-size:19px;font-weight:700;color:var(--primary-dark);">${bal.remaining} j</div>
-          <div style="font-size:11px;color:var(--muted);">Restant</div>
-        </div>
-        <div style="background:var(--success-light);padding:12px;border-radius:9px;text-align:center;">
-          <div style="font-size:19px;font-weight:700;color:var(--success);">${bal.taken} j</div>
-          <div style="font-size:11px;color:var(--muted);">Validés</div>
-        </div>
-        <div style="background:var(--gold-light);padding:12px;border-radius:9px;text-align:center;">
-          <div style="font-size:19px;font-weight:700;color:#8A5A00;">${bal.pending} j</div>
-          <div style="font-size:11px;color:var(--muted);">En attente</div>
-        </div>
+        <div class="card" style="padding:12px;text-align:center;"><div style="font-size:20px;font-weight:800;color:var(--primary);">${bal.remaining} j</div><div style="font-size:11px;color:var(--muted);">Solde congés</div></div>
+        <div class="card" style="padding:12px;text-align:center;"><div style="font-size:16px;font-weight:800;color:var(--success);">${formatMAD(emp.baseSalary)}</div><div style="font-size:11px;color:var(--muted);">Salaire base</div></div>
+        <div class="card" style="padding:12px;text-align:center;"><div style="font-size:20px;font-weight:800;color:var(--accent);">${trs.length}</div><div style="font-size:11px;color:var(--muted);">Formations</div></div>
       </div>
-
-      <div>
-        <h4 style="margin-bottom:8px;">Historique des congés (${empLeaves.length})</h4>
-        ${empLeaves.length === 0 ? `<p style="color:var(--muted);font-size:13px;">Aucune demande.</p>` :
-          empLeaves.map(l => `
-            <div style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;">
-              <div>
-                <div style="font-weight:600;text-transform:capitalize;">${esc(l.type)} (${l.days} j)</div>
-                <div style="font-size:12px;color:var(--muted);">${fmtDate(l.start)} → ${fmtDate(l.end)}</div>
-              </div>
-              ${statusBadge(l.status)}
-            </div>`).join('')}
+      <div class="card" style="padding:14px;background:var(--bg);font-size:12.5px;">
+        <div><strong>N° CNSS :</strong> ${esc(emp.cnss)} • <strong>Embauche :</strong> ${emp.hireYear} (Ancienneté ${Math.round(getSeniorityRate(emp.hireYear)*100)}%)</div>
+        <div style="margin-top:4px;"><strong>Situation fiscale :</strong> ${emp.married ? 'Marié(e)' : 'Célibataire'}, ${emp.children} enfant(s) à charge • <strong>Indemnité transport :</strong> ${formatMAD(emp.transportAllowance)}</div>
       </div>
-
       <div>
-        <h4 style="margin-bottom:8px;">Formations suivies / inscrites (${empTr.length})</h4>
-        ${empTr.length === 0 ? `<p style="color:var(--muted);font-size:13px;">Aucune formation.</p>` :
-          empTr.map(item => `
-            <div style="padding:9px 12px;border:1px solid var(--border);border-radius:8px;margin-bottom:7px;">
-              <div style="font-weight:600;">${esc(item.tr?.title || 'Formation')}</div>
-              <div style="font-size:12px;color:var(--muted);">${fmtDate(item.tr?.date)} • ${item.present === true ? 'Présent' : item.present === false ? 'Absent' : 'Inscrit'}</div>
-            </div>`).join('')}
+        <h4 style="margin-bottom:8px;">Dernières demandes de congés (${leaves.length})</h4>
+        ${leaves.slice(-4).reverse().map(l => `
+          <div style="padding:9px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
+            <span><strong>${esc(l.type)}</strong> (${fmtDate(l.start)} → ${fmtDate(l.end)})</span>
+            ${statusBadge(l.status)}
+          </div>`).join('') || '<p style="color:var(--muted);">Aucune demande.</p>'}
+      </div>
+      <div>
+        <h4 style="margin-bottom:8px;">Bulletins de paie générés (${slips.length})</h4>
+        ${slips.slice().reverse().map(s => `
+          <div style="padding:9px;border:1px solid var(--border);border-radius:8px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center;">
+            <span><strong style="text-transform:capitalize;">${esc(formatPeriodLabel(s.period))}</strong> • Net : <strong style="color:var(--success);">${formatMAD(s.netPayable)}</strong></span>
+            <button class="btn btn-outline btn-sm" onclick="closeEmployeeDrawer();openPayslipModal('${s.id}')">Bulletin</button>
+          </div>`).join('') || '<p style="color:var(--muted);">Aucun bulletin.</p>'}
+      </div>
+      <div>
+        <h4 style="margin-bottom:8px;">Absences enregistrées (${abs.length})</h4>
+        ${abs.slice(-3).reverse().map(a => `<div style="font-size:13px;padding:6px 0;border-bottom:1px solid var(--border);">${fmtDate(a.start)} : <strong>${esc(a.type)}</strong> — ${esc(a.note || '')}</div>`).join('') || '<p style="color:var(--muted);">Aucune absence.</p>'}
       </div>
     </aside>
   </div>`;
 }
 
 function viewHrChange() {
-  const k = computeKPIs();
-  const cards = [
-    { title: '1. Utilisation de la plateforme', val: `${k.kpi1}%`, target: 'Cible : 90%', pct: Math.min(100, Math.round((k.kpi1 / 90) * 100)), trend: 'Activité des 7 derniers jours', sub: `${k.activeWeekCount}/${db.employees.length} comptes de démonstration actifs`, ok: k.kpi1 >= 80 },
-    { title: '2. Participation aux formations', val: `${k.kpi2}%`, target: 'Cible : 90%', pct: Math.min(100, Math.round((k.kpi2 / 90) * 100)), trend: 'Présence aux sessions passées', sub: 'Participants présents / inscrits', ok: k.kpi2 >= 85 },
-    { title: '3. Satisfaction des utilisateurs', val: `${k.kpi3} / 5`, target: 'Cible : ≥ 4 / 5', pct: Math.min(100, Math.round((k.kpi3 / 5) * 100)), trend: `${db.survey.length} évaluation(s)`, sub: 'Moyenne des évaluations des salariés', ok: k.kpi3 >= 4 },
-    { title: '4. Réduction des erreurs', val: `-${k.kpi4}%`, target: 'Cible : -80%', pct: Math.min(100, Math.round((k.kpi4 / 80) * 100)), trend: 'Comparaison avec le suivi manuel', sub: 'Erreurs estimées avant / après digitalisation', ok: k.kpi4 >= 80 },
-    { title: '5. Délai moyen de traitement', val: `${k.kpi5} h`, target: 'Cible : < 48 h', pct: Math.min(100, Math.max(15, Math.round((48 / Math.max(1, k.kpi5)) * 80))), trend: 'Du dépôt à la décision RH', sub: 'Demandes acceptées ou refusées', ok: k.kpi5 < 48 }
+  const kpis = computeKPIs();
+  const surveyRate = Math.round((db.survey.length / db.employees.length) * 100);
+  const kpiCards = [
+    { id: 'KPI 1', title: 'Taux d’utilisation hebdo', val: `${kpis.kpi1}%`, target: 'Cible : ≥ 85%', ok: kpis.kpi1 >= 85, sub: `${kpis.activeWeekCount}/${db.employees.length} actifs sur 7j` },
+    { id: 'KPI 2', title: 'Participation formations', val: `${kpis.kpi2}%`, target: 'Cible : ≥ 80%', ok: kpis.kpi2 >= 80, sub: 'Présence sessions passées' },
+    { id: 'KPI 3', title: 'Satisfaction utilisateurs', val: `${kpis.kpi3}/5`, target: 'Cible : ≥ 4,0/5', ok: kpis.kpi3 >= 4, sub: `Taux de réponse : ${surveyRate}%` },
+    { id: 'KPI 4', title: 'Réduction erreurs admin.', val: `-${kpis.kpi4}%`, target: 'Cible : ≥ 70%', ok: kpis.kpi4 >= 70, sub: 'Comparatif papier vs Atlas RH' },
+    { id: 'KPI 5', title: 'Délai moyen validation', val: `${kpis.kpi5}h`, target: 'Cible : < 48h', ok: kpis.kpi5 < 48, sub: 'Temps création → décision' }
   ];
+
+  const ideas = Array.isArray(db.ideas) ? db.ideas : [];
+  const comments = db.feedback.slice().reverse();
+
   return `
   <div class="page-header">
     <div>
-      <h1 class="page-title">Indicateurs de performance RH</h1>
-      <p class="page-sub">Suivi de l’utilisation d’Atlas RH et de la qualité des processus digitalisés.</p>
+      <h1 class="page-title">Indicateurs RH & qualité de service</h1>
+      <p class="page-sub">Indicateurs d’usage du prototype, suivi des retours salariés et boîtes à idées internes.</p>
     </div>
-    <div style="display:flex;gap:9px;flex-wrap:wrap;">
-      <button class="btn btn-outline no-print" onclick="exportKpisCSV()"><i data-lucide="download"></i> Exporter les KPI</button>
-      <button class="btn btn-primary no-print" onclick="window.print()"><i data-lucide="printer"></i> Imprimer le bilan</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn btn-outline" onclick="exportAllReportCSV()"><i data-lucide="file-spreadsheet"></i> Export rapport CSV</button>
+      <button class="btn btn-primary" onclick="window.print()"><i data-lucide="printer"></i> Imprimer le bilan</button>
     </div>
   </div>
-  <div class="grid-5" style="margin-bottom:22px;">
-    ${cards.map(c => `
-      <div class="card" style="padding:16px;">
-        <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:6px;">${c.title}</div>
-        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;gap:8px;">
-          <span style="font-family:'Poppins',sans-serif;font-size:24px;font-weight:700;color:var(--primary-dark);">${c.val}</span>
-          <span class="badge ${c.ok ? 'badge-green' : 'badge-gold'}" style="font-size:11px;">${c.target}</span>
+
+  <div class="grid-5" style="margin-bottom:20px;">
+    ${kpiCards.map(k => `
+      <div class="card" style="padding:16px;border-top:4px solid ${k.ok ? 'var(--success)' : 'var(--accent)'};">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <span style="font-size:11px;font-weight:700;color:var(--muted);">${k.id}</span>
+          <span class="badge ${k.ok ? 'badge-green' : 'badge-gold'}">${k.target}</span>
         </div>
-        <div class="progress-bar" style="margin-bottom:8px;"><div class="progress-fill" style="width:${c.pct}%;background:${c.ok ? 'var(--success)' : 'var(--accent)'};"></div></div>
-        <div style="font-size:11.5px;color:var(--success);font-weight:600;">${c.trend}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:2px;">${c.sub}</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:26px;font-weight:800;color:var(--primary-dark);">${k.val}</div>
+        <div style="font-weight:700;font-size:13px;margin-top:2px;">${k.title}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">${k.sub}</div>
       </div>`).join('')}
   </div>
-  <div class="grid-2" style="margin-bottom:22px;">
+
+  <div class="grid-2" style="margin-bottom:20px;">
     <div class="card">
-      <div class="card-title"><span>Évolution hebdomadaire des comptes actifs (12 semaines)</span></div>
-      <div class="chart-wrap" style="height:230px;"><canvas id="chart-adoption-12w"></canvas></div>
+      <div class="card-title"><span>Évolution de l'adoption hebdomadaire (%)</span></div>
+      <div style="height:240px;"><canvas id="chart-adoption"></canvas></div>
     </div>
     <div class="card">
-      <div class="card-title"><span>Repères du projet</span><span class="badge badge-primary">Atlas Services SARL</span></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-        <div class="stat-tile"><div><div class="stat-val">90</div><div class="stat-lbl">Salariés (hypothèse)</div></div></div>
-        <div class="stat-tile"><div><div class="stat-val">2</div><div class="stat-lbl">Sites : Casa & Rabat</div></div></div>
-        <div class="stat-tile"><div><div class="stat-val">20</div><div class="stat-lbl">Administratifs</div></div></div>
-        <div class="stat-tile"><div><div class="stat-val">70</div><div class="stat-lbl">Agents terrain</div></div></div>
-      </div>
-      <p style="font-size:12px;color:var(--muted);margin-top:12px;">Le prototype utilise un échantillon de comptes fictifs pour la démonstration. Les données de l’entreprise sont des hypothèses pédagogiques.</p>
+      <div class="card-title"><span>Erreurs administratives : Papier/Excel vs Atlas RH</span></div>
+      <div style="height:240px;"><canvas id="chart-errors"></canvas></div>
     </div>
   </div>
+
+  <div class="grid-2" style="margin-bottom:20px;align-items:start;">
+    <div class="card">
+      <div class="card-title"><span>Avis & suggestions des collaborateurs (${comments.length})</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        ${comments.map(f => `
+          <div style="padding:11px 12px;border:1px solid var(--border);border-radius:9px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+              <strong>${esc(getEmpName(f.empId))}</strong>
+              <span class="badge ${f.status === 'Pris en compte' ? 'badge-green' : 'badge-gold'}">${esc(f.status)}</span>
+            </div>
+            <p style="font-size:13px;margin:5px 0 8px;">${esc(f.text)}</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:11.5px;color:var(--muted);">${fmtDate(f.ts)}</span>
+              ${f.status !== 'Pris en compte'
+                ? `<button class="btn btn-outline btn-sm" onclick="markFeedbackResolved('${f.id}')">Marquer traité</button>`
+                : ''}
+            </div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>Idées d’amélioration d’équipe (${ideas.length})</span><span class="badge badge-primary">Priorisation</span></div>
+      <form onsubmit="submitHrIdea(event)" style="display:flex;gap:8px;margin-bottom:14px;">
+        <input id="hr-idea-input" type="text" class="form-control" maxlength="200" placeholder="Ajouter une piste d’action interne..." required>
+        <button class="btn btn-primary" type="submit"><i data-lucide="plus"></i> Ajouter</button>
+      </form>
+      ${ideas.length === 0 ? `<p style="color:var(--muted);font-size:13px;">Aucune idée ajoutée pour le moment. Saisissez une action pour préparer la prochaine réunion de suivi.</p>` : `
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        ${ideas.slice().sort((a,b) => b.votes - a.votes).map(idItem => `
+          <div style="padding:10px 12px;border:1px solid var(--border);border-radius:9px;display:flex;justify-content:space-between;align-items:center;gap:10px;">
+            <div>
+              <div style="font-weight:600;font-size:13.5px;">${esc(idItem.title)}</div>
+              <div style="font-size:11.5px;color:var(--muted);">Par ${esc(getEmpName(idItem.authorId))} • ${fmtDate(idItem.ts)}</div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="voteHrIdea('${idItem.id}')"><i data-lucide="thumbs-up"></i> ${idItem.votes}</button>
+          </div>`).join('')}
+      </div>`}
+    </div>
+  </div>
+
   <div class="card">
-    <div class="card-title">
-      <span>Suggestions et retours des salariés (${db.feedback.length})</span>
-      <span class="badge badge-gold">${db.feedback.filter(f => f.status === 'Nouveau').length} à traiter</span>
+    <div class="card-title"><span>Ambassadeurs par équipe & faq interne</span></div>
+    <div class="grid-3" style="margin-bottom:16px;">
+      ${db.ambassadors.map(a => {
+        const emp = db.employees.find(e => e.id === a.empId);
+        return `
+        <div style="padding:12px;border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:10px;">
+          <div class="avatar">${esc((emp?.name || 'A').split(' ').map(x=>x[0]).slice(0,2).join(''))}</div>
+          <div>
+            <div style="font-weight:700;">${esc(emp?.name || '')}</div>
+            <div style="font-size:12px;color:var(--primary);font-weight:600;">${esc(a.team)}</div>
+            <div style="font-size:11.5px;color:var(--muted);">Site de ${esc(emp?.site || '')}</div>
+          </div>
+        </div>`;
+      }).join('')}
     </div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Collaborateur</th><th>Suggestion / difficulté</th><th>Date</th><th>Statut</th><th>Action RH</th></tr></thead>
-        <tbody>
-          ${db.feedback.slice().reverse().map(f => `
-            <tr><td><strong>${esc(getEmpName(f.empId))}</strong></td><td>${esc(f.text)}</td><td>${fmtDate(f.ts)}</td>
-              <td><span class="badge ${f.status === 'Pris en compte' ? 'badge-green' : 'badge-gold'}">${esc(f.status)}</span></td>
-              <td>${f.status === 'Nouveau' ? `<button class="btn btn-primary btn-sm" onclick="ackFeedback('${f.id}')">Marquer traité</button>` : `<span style="font-size:12px;color:var(--success);">✔ Traité</span>`}</td>
-            </tr>`).join('')}
-          ${db.feedback.length === 0 ? '<tr><td colspan="5" style="text-align:center;color:var(--muted);">Aucune suggestion reçue pour le moment.</td></tr>' : ''}
-        </tbody>
-      </table>
-    </div>
+    <details class="faq-item"><summary>Comment est calculée la paie marocaine dans Atlas RH ?</summary><p>Le module applique automatiquement l'ancienneté légale (5% à 25%), les heures supplémentaires (+25% et +50% sur base 191h), les cotisations CNSS (4,48% plafonné à 6 000 MAD) et AMO (2,26%), les frais professionnels (35% ou 25%) ainsi que le barème progressif mensuel de l'IR avec charges de famille.</p></details>
+    <details class="faq-item"><summary>Comment mes jours ouvrés de congés sont-ils calculés ?</summary><p>Atlas RH exclut automatiquement les samedis et dimanches. Vous pouvez également cocher l'option demi-journée (-0,5 jour).</p></details>
+    <details class="faq-item"><summary>Puis-je annuler une demande de congé déjà envoyée ?</summary><p>Oui, depuis la page « Mes demandes », tant que le statut est « En attente » de validation RH.</p></details>
   </div>`;
 }
 
-function ackFeedback(id) {
+function submitHrIdea(e) {
+  e.preventDefault();
+  const input = document.getElementById('hr-idea-input');
+  const title = input?.value.trim();
+  if (!title) return;
+  if (!Array.isArray(db.ideas)) db.ideas = [];
+  const user = getCurrentUser();
+  db.ideas.push({ id: 'idea_' + Date.now(), title, authorId: user.id, votes: 1, ts: isoDate(0) });
+  saveDb();
+  recordEvent(user.id, 'add_idea');
+  toast('Idée ajoutée à la liste de priorisation.');
+  render();
+}
+
+function voteHrIdea(id) {
+  if (!Array.isArray(db.ideas)) return;
+  const item = db.ideas.find(i => i.id === id);
+  if (!item) return;
+  item.votes = (item.votes || 0) + 1;
+  saveDb();
+  toast('Vote enregistré.');
+  render();
+}
+
+function markFeedbackResolved(id) {
   const fb = db.feedback.find(f => f.id === id);
   if (!fb) return;
   fb.status = 'Pris en compte';
-  db.notifications.push({
-    id: 'nt_' + Date.now(),
-    to: fb.empId,
-    text: 'Votre suggestion a été prise en compte par le service RH.',
-    ts: new Date().toISOString(),
-    read: false
-  });
   saveDb();
-  recordEvent(getCurrentUser().id, 'ack_feedback');
+  recordEvent(getCurrentUser().id, 'resolve_feedback');
   toast('Retour marqué comme pris en compte.');
   render();
 }
 
-
-/* ==========================================================================
-   10. EXPORTS — practical reporting for the RH demonstration
-========================================================================== */
-function csvCell(value) {
-  let text = String(value ?? '');
-  // Prevent spreadsheet formula execution when opening exported CSV files.
-  if (/^[=+\-@]/.test(text)) text = "'" + text;
-  return '"' + text.replace(/"/g, '""') + '"';
-}
-function downloadCSV(filename, headers, rows) {
-  const content = '\uFEFF' + [headers, ...rows].map(row => row.map(csvCell).join(';')).join('\r\n');
-  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  toast('Export CSV généré avec succès.', 'success');
-}
-function exportLeavesCSV() {
-  const rows = db.leaves.slice().reverse().map(l => {
-    const emp = db.employees.find(e => e.id === l.empId) || {};
-    return [emp.name || 'Collaborateur', emp.service || '', emp.team || '', emp.site || '', l.type, l.start, l.end, l.days, l.status, l.reason, l.createdAt, l.decidedAt || '', l.decidedBy || '', l.refusal || ''];
-  });
-  downloadCSV('atlas-rh-demandes-conges.csv', ['Collaborateur','Service','Équipe','Site','Type','Début','Fin','Jours ouvrés','Statut','Motif','Date de demande','Date de décision','Décision par','Motif du refus'], rows);
-}
-function exportEmployeesCSV() {
-  const rows = db.employees.map(e => {
-    const b = getLeaveBalance(e.id);
-    return [e.name,e.service,e.team,e.site,e.role,b.total,b.taken,b.pending,b.remaining];
-  });
-  downloadCSV('atlas-rh-annuaire-collaborateurs.csv', ['Collaborateur','Service','Équipe','Site','Profil','Droits annuels (j)','Congés validés (j)','En attente (j)','Solde disponible (j)'], rows);
-}
-function exportKpisCSV() {
-  const k = computeKPIs();
-  const rows = [
-    ['Utilisation de la plateforme', k.kpi1, '%', 'Cible 90%'],
-    ['Participation aux formations', k.kpi2, '%', 'Cible 90%'],
-    ['Satisfaction des utilisateurs', k.kpi3, '/5', 'Cible 4/5'],
-    ['Réduction estimée des erreurs', k.kpi4, '%', 'Cible 80%'],
-    ['Délai moyen de traitement', k.kpi5, 'heures', 'Cible < 48h']
-  ];
-  downloadCSV('atlas-rh-indicateurs.csv', ['Indicateur','Valeur','Unité','Objectif'], rows);
-}
-
 /* ============================================================================
-   9. CHART.JS MOUNTING (WITH GRACEFUL CDN FALLBACK)
+   8. CHARTS & CSV EXPORTS
 ============================================================================ */
 function mountViewWidgets(hash) {
-  if (!window.Chart) {
-    document.querySelectorAll('.chart-wrap').forEach(el => {
-      el.innerHTML = `<div style="height:100%;display:grid;place-items:center;color:var(--muted);font-size:12.5px;background:var(--bg);border-radius:8px;">Graphique indisponible hors-ligne</div>`;
-    });
-    return;
-  }
-
+  if (!window.Chart) return;
   if (hash.startsWith('#/hr/dashboard')) {
-    const c1 = document.getElementById('chart-hr-months');
-    const c2 = document.getElementById('chart-hr-types');
-    const c3 = document.getElementById('chart-hr-status');
-    if (c1) {
-      activeCharts.push(new Chart(c1, {
+    const ctx = document.getElementById('chart-hr-months');
+    if (ctx) {
+      const monthLabels = [];
+      const leaveSeries = [];
+      const absSeries = [];
+      for (let i = 5; i >= 0; i--) {
+        const d = new Date();
+        d.setDate(1);
+        d.setMonth(d.getMonth() - i);
+        const key = d.toISOString().slice(0, 7);
+        monthLabels.push(d.toLocaleDateString('fr-FR', { month: 'short' }));
+        leaveSeries.push(db.leaves.filter(l => l.start.startsWith(key) && l.status === 'Validée').reduce((s, l) => s + Number(l.days || 0), 0));
+        absSeries.push(db.absences.filter(a => a.start.startsWith(key)).length);
+      }
+      activeCharts.push(new Chart(ctx, {
         type: 'bar',
         data: {
-          labels: (() => { const ds = Array.from({length:4},(_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-(3-i));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}); return ds.map(k=>new Date(k+'-01T12:00:00').toLocaleDateString('fr-FR',{month:'short'})); })(),
+          labels: monthLabels,
           datasets: [
-            { label: 'Congés validés', data: (() => { const ds = Array.from({length:4},(_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-(3-i));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}); return ds.map(k=>db.leaves.filter(l=>l.status==='Validée' && l.decidedAt && l.decidedAt.slice(0,7)===k).length); })(), backgroundColor: '#0F8B8B', borderRadius: 7 },
-            { label: 'Absences enregistrées', data: (() => { const ds = Array.from({length:4},(_,i)=>{const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-(3-i));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;}); return ds.map(k=>db.absences.filter(a=>(a.createdAt||a.start||'').slice(0,7)===k).length); })(), backgroundColor: '#D9855D', borderRadius: 7 }
+            { label: 'Jours de congés validés', data: leaveSeries, backgroundColor: '#0F6E7C', borderRadius: 6 },
+            { label: 'Absences enregistrées', data: absSeries, backgroundColor: '#E36414', borderRadius: 6 }
           ]
         },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-      }));
-    }
-    if (c2) {
-      const types = ['annuel', 'maladie', 'exceptionnel', 'sans solde'];
-      activeCharts.push(new Chart(c2, {
-        type: 'doughnut',
-        data: {
-          labels: ['Annuel', 'Maladie', 'Exceptionnel', 'Sans solde'],
-          datasets: [{
-            data: types.map(t => db.leaves.filter(l => l.type === t).length),
-            backgroundColor: ['#0F6E7C', '#B23A48', '#F2B134', '#5C6B73']
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-      }));
-    }
-    if (c3) {
-      const statuses = ['Validée', 'En attente', 'Refusée', 'Annulée'];
-      activeCharts.push(new Chart(c3, {
-        type: 'bar',
-        data: {
-          labels: statuses,
-          datasets: [{
-            label: 'Demandes',
-            data: statuses.map(s => db.leaves.filter(l => l.status === s).length),
-            backgroundColor: ['#3E8E63', '#F2B134', '#B23A48', '#8FAAB2'],
-            borderRadius: 6
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+        options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { y: { beginAtZero: true } } }
       }));
     }
   }
 
   if (hash.startsWith('#/hr/change')) {
-    const c4 = document.getElementById('chart-adoption-12w');
-    if (c4) {
+    const ctx1 = document.getElementById('chart-adoption');
+    if (ctx1) {
       const weekly = computeWeeklyAdoption();
-      activeCharts.push(new Chart(c4, {
+      activeCharts.push(new Chart(ctx1, {
         type: 'line',
         data: {
           labels: weekly.labels,
           datasets: [{
-            label: "Taux d'adoption (%)",
+            label: '% collaborateurs actifs hebdo',
             data: weekly.values,
             borderColor: '#0F6E7C',
-            backgroundColor: 'rgba(15,110,124,0.14)',
+            backgroundColor: 'rgba(15,110,124,0.12)',
             fill: true,
-            tension: 0.35
+            tension: 0.32
           }]
         },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: { y: { min: 0, max: 100 } },
-          plugins: { legend: { position: 'bottom' } }
-        }
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { min: 0, max: 100 } } }
+      }));
+    }
+    const ctx2 = document.getElementById('chart-errors');
+    if (ctx2) {
+      activeCharts.push(new Chart(ctx2, {
+        type: 'bar',
+        data: {
+          labels: db.errorsLog.map(e => e.month),
+          datasets: [
+            { label: 'Processus Papier / Excel', data: db.errorsLog.map(e => e.paper), backgroundColor: '#B23A48', borderRadius: 5 },
+            { label: 'Avec Atlas RH', data: db.errorsLog.map(e => e.atlas), backgroundColor: '#3E8E63', borderRadius: 5 }
+          ]
+        },
+        options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }
       }));
     }
   }
+}
+
+function downloadCSV(filename, headers, rows) {
+  const escapeCsv = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
+  const csv = '\uFEFF' + [headers.map(escapeCsv).join(';'), ...rows.map(r => r.map(escapeCsv).join(';'))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  toast(`Export téléchargé : ${filename}`);
+}
+
+function exportLeavesCSV() {
+  downloadCSV(
+    `atlas-rh-conges-${isoDate(0)}.csv`,
+    ['ID', 'Collaborateur', 'Type', 'Début', 'Fin', 'Jours', 'Statut', 'Motif', 'Décision par'],
+    db.leaves.map(l => [l.id, getEmpName(l.empId), l.type, l.start, l.end, l.days, l.status, l.reason, l.decidedBy || ''])
+  );
+}
+
+function exportAbsencesCSV() {
+  downloadCSV(
+    `atlas-rh-absences-${isoDate(0)}.csv`,
+    ['ID', 'Collaborateur', 'Type', 'Début', 'Fin', 'Note'],
+    db.absences.map(a => [a.id, getEmpName(a.empId), a.type, a.start, a.end, a.note || ''])
+  );
+}
+
+function exportAllReportCSV() {
+  const k = computeKPIs();
+  downloadCSV(
+    `atlas-rh-bilan-conduite-changement-${isoDate(0)}.csv`,
+    ['Indicateur', 'Valeur', 'Cible'],
+    [
+      ['KPI 1 - Utilisation hebdomadaire (%)', k.kpi1 + '%', '>= 85%'],
+      ['KPI 2 - Participation formations (%)', k.kpi2 + '%', '>= 80%'],
+      ['KPI 3 - Satisfaction utilisateurs (/5)', k.kpi3, '>= 4.0'],
+      ['KPI 4 - Réduction erreurs administratives (%)', k.kpi4 + '%', '>= 70%'],
+      ['KPI 5 - Délai moyen de validation (heures)', k.kpi5 + 'h', '< 48h']
+    ]
+  );
 }
 </script>
 </body>
